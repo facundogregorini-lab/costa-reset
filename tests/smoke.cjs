@@ -136,9 +136,10 @@ const iso = offset => new Date(Date.now() + offset * 864e5 - new Date().getTimez
     await thesis.goto(SITE + '/tesis', { waitUntil: 'load' });
     check('Thesis page loads at /tesis', (await thesis.textContent('h1')).includes('El trabajo cambió'));
     check('Thesis cites its sources', (await thesis.locator('.sources li').count()) >= 7);
+    check('Revenue uses the average ticket', (await thesis.textContent('#o-ticket')) === 'USD 80' && (await thesis.textContent('.revenue')) === 'USD 455.520' && (await thesis.textContent('#r-revenue-note')) === 'USD 37.960 por mes');
     check('Calculator starts with one site', (await thesis.textContent('#r-nights')) === '5.694' && (await thesis.textContent('#r-people')) === '456' && (await thesis.textContent('#r-companies')) === '29' && (await thesis.textContent('#r-share')) === '0,07%');
     await thesis.locator('#sites').fill('10');
-    check('Calculator scales to a chain', (await thesis.textContent('#r-people')) === '4.555' && (await thesis.textContent('#r-share')) === '0,7%');
+    check('Calculator scales to a chain', (await thesis.textContent('#r-people')) === '4.555' && (await thesis.textContent('#r-share')) === '0,7%' && (await thesis.textContent('.revenue')) === 'USD 4.555.200' && (await thesis.textContent('#r-revenue-note')) === 'USD 455.520 por sede');
     check('Startup ecosystem is part of the thesis', (await thesis.textContent('.startups')).includes('1.384') && (await thesis.locator('.sources li').count()) >= 10);
     await thesis.close();
 

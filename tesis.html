@@ -214,12 +214,20 @@ src="https://www.facebook.com/tr?id=1671294247882059&ev=PageView&noscript=1"
           <label>Noches por estadía <output id="o-stay"></output><input type="range" id="stay" min="2" max="14" step="1" value="5"></label>
           <label>Visitas por persona al año <output id="o-visits"></output><input type="range" id="visits" min="1" max="4" step="0.5" value="1.5"></label>
           <label>Noches vendidas a empresas <output id="o-corp"></output><input type="range" id="corp" min="0" max="80" step="5" value="40"></label>
+          <label>Ticket medio por noche <output id="o-ticket"></output><input type="range" id="ticket" min="40" max="250" step="5" value="80" aria-describedby="ticket-hint"><small class="calc-hint" id="ticket-hint">Hospedaje, cowork, actividades y otros consumos, por persona y por noche.</small></label>
           <label>Sedes <output id="o-sites"></output><input type="range" id="sites" min="1" max="15" step="1" value="1"></label>
         </form>
         <div class="calc-results" aria-live="polite">
-          <div class="result">
-            <p class="result-label">Noches ocupadas por año</p>
-            <p class="result-value" id="r-nights"></p>
+          <div class="result result-pair">
+            <div>
+              <p class="result-label">Noches ocupadas por año</p>
+              <p class="result-value" id="r-nights"></p>
+            </div>
+            <div>
+              <p class="result-label">Facturación anual</p>
+              <p class="result-value revenue"><small>USD</small> <span id="r-revenue"></span></p>
+              <p class="result-share" id="r-revenue-note"></p>
+            </div>
           </div>
           <div class="result">
             <p class="result-label">Personas que tienen que venir por su cuenta</p>
@@ -233,7 +241,7 @@ src="https://www.facebook.com/tr?id=1671294247882059&ev=PageView&noscript=1"
             <p class="result-share"><b id="r-cshare"></b> de las grandes empresas híbridas (≈ 2.450)</p>
             <div class="share-bar" aria-hidden="true"><span id="r-cshare-bar"></span></div>
           </div>
-          <p class="calc-note">Cada empresa cliente: 20 personas × 4 noches al año. Una habitación por persona. Cálculos propios con los supuestos de la izquierda.</p>
+          <p class="calc-note">Facturación = noches ocupadas × ticket medio, en dólares y antes de impuestos. Cada empresa cliente: 20 personas × 4 noches al año. Una habitación por persona. Cálculos propios con los supuestos de la izquierda.</p>
         </div>
       </div>
     </div>
