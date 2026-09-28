@@ -79,6 +79,20 @@ Piezas: `C-beneficio-feed.jpg`, `C-beneficio-story.jpg`
 **Botón:** Más información
 **Enlace:** `https://TU-DOMINIO/?utm_source=meta&utm_medium=paid&utm_campaign=remotos&utm_content=c-beneficio`
 
+### Anuncio R · Reel "Un día" (video)
+Pieza: `reel-un-dia.mp4` (9:16, 16 segundos, con sonido de mar). Subilo como anuncio aparte dentro del mismo conjunto de "Remotos".
+
+**Texto principal:**
+> 07:00 surf. 09:00 foco con vista. 14:00 calls sin ruido. 18:30 pileta.
+>
+> Coliving y cowork premium en la Costa Atlántica para profesionales remotos. Pre-reservá tus fechas sin pagar y te confirmamos por WhatsApp.
+
+**Título:** Tu semana de trabajo, frente al mar
+**Botón:** Más información
+**Enlace:** `https://TU-DOMINIO/?utm_source=meta&utm_medium=paid&utm_campaign=remotos&utm_content=r-reel`
+
+Consejos: en *Ubicaciones* dejá las automáticas (el video se adapta a Reels, Stories y feed). Si Meta ofrece agregar música de su biblioteca, podés reemplazar el sonido de mar. El primer cuadro ya tiene el gancho, así que sirve como portada.
+
 ### Anuncio E · Comunidad (opcional, conjunto aparte)
 Pieza: `E-comunidad-feed.jpg`. Público: intereses en startups, emprendimiento, inversión de riesgo, tecnología.
 
