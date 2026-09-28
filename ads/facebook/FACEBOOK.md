@@ -68,7 +68,7 @@ Imagen: `post-3-empresas.jpg`
 >
 > Alojamiento, cowork, salas, comida y actividades, resueltos en un solo lugar. Para atraer talento y para que quiera quedarse.
 >
-> Si trabajás en RR. HH. o liderás un equipo, pedí una propuesta: costa-reset.vercel.app/#empresas
+> Si trabajás en RR. HH. o liderás un equipo, pedí una propuesta sin compromiso 👉 https://costa-reset.vercel.app/?utm_source=facebook&utm_medium=organic&utm_campaign=post-empresas#empresas
 >
 > #RecursosHumanos #EmployerBranding #Beneficios #TrabajoRemoto #Offsite
 
@@ -81,7 +81,7 @@ Imagen: `post-4-pre-reserva.jpg`
 >
 > Desde USD 40 por noche, con habitación con escritorio, cowork, gym, pileta y desayuno.
 >
-> 👉 costa-reset.vercel.app/#reservar
+> 👉 https://costa-reset.vercel.app/?utm_source=facebook&utm_medium=organic&utm_campaign=post-prereserva#reservar
 >
 > #CostaResetClub #Workation #TrabajoRemoto #Coliving
 
