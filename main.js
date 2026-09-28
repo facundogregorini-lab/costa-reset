@@ -62,7 +62,8 @@ const mobileCta = $('mobileCta');
 if ('IntersectionObserver' in window) {
   let pastHero = false;
   const atForm = new Set();
-  const sync = () => mobileCta.classList.toggle('visible', pastHero && atForm.size === 0);
+  const waFloat = document.querySelector('.wa-float');
+  const sync = () => { mobileCta.classList.toggle('visible', pastHero && atForm.size === 0); waFloat?.classList.toggle('visible', pastHero); };
   new IntersectionObserver(([e]) => { pastHero = !e.isIntersecting; sync(); }).observe(document.querySelector('.hero'));
   const formObserver = new IntersectionObserver(entries => {
     for (const e of entries) e.isIntersecting ? atForm.add(e.target) : atForm.delete(e.target);
@@ -106,12 +107,27 @@ for (const form of document.querySelectorAll('form.form')) {
   form.addEventListener('change', e => e.target.removeAttribute('aria-invalid'));
 }
 
+// Después de enviar, la persona pasa a gracias.html, que muestra los próximos pasos y
+// dispara ahí el evento Lead (así no se pierde por cambiar de página).
+function goThanks(lead) {
+  try {
+    sessionStorage.setItem('cr-lead', JSON.stringify(lead));
+    location.href = 'gracias.html';
+    return true;
+  } catch {
+    trackLead(lead.kind, lead.eventId);
+    return false;
+  }
+}
+
 // ---------- Reserva de personas ----------
 const reserveForm = $('reserveForm');
 const from = $('from'), to = $('to');
 const iso = d => new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
 const parse = value => (value ? new Date(value + 'T12:00:00') : null);
 const pretty = d => d.toLocaleDateString('es-AR', { day: 'numeric', month: 'short', year: 'numeric' });
+
+const PRICE_FROM = 40; // USD por noche, el mismo "desde" que muestra la página
 
 from.min = iso(new Date());
 to.min = iso(new Date(Date.now() + 86400000));
@@ -126,7 +142,9 @@ function updateNights() {
     if (to.value && to.value <= from.value) to.value = '';
   }
   const n = nights();
-  $('nights').textContent = n > 0 ? `${n} ${n === 1 ? 'noche' : 'noches'} seleccionadas` : '';
+  $('nights').textContent = n > 0
+    ? `${n} ${n === 1 ? 'noche' : 'noches'} · desde USD ${(n * PRICE_FROM).toLocaleString('es-AR')} en total (estimado)`
+    : '';
 }
 from.addEventListener('change', () => { updateNights(); if (!to.value) to.focus(); });
 to.addEventListener('change', updateNights);
@@ -157,13 +175,14 @@ reserveForm.addEventListener('submit', e => {
   ].join('\n');
 
   // WhatsApp se abre en el mismo gesto del usuario para que el navegador no lo bloquee.
-  window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
+  const wa = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`;
+  window.open(wa, '_blank', 'noopener');
   const eventId = newEventId();
   save({ type: 'persona', name, whatsapp: phone, from: from.value, to: to.value, mode: data.mode, eventId });
-  trackLead('reserva', eventId);
-  toast('¡Listo! Abrimos WhatsApp para confirmar tu reserva.');
+  const lead = { kind: 'reserva', eventId, name, from: from.value, to: to.value, nights: n, wa };
   reserveForm.reset();
   updateNights();
+  if (!goThanks(lead)) toast('¡Listo! Abrimos WhatsApp para confirmar tu reserva.');
 });
 
 // ---------- Propuesta para empresas ----------
@@ -192,8 +211,9 @@ companyForm.addEventListener('submit', async e => {
   }).catch(() => null);
   button.disabled = false;
   if (!response?.ok) return fail(null, 'No pudimos enviar el pedido. Escribinos a hola@costaresetclub.com y te respondemos igual.');
-  trackLead('empresa', eventId);
   companyForm.reset();
-  companyForm.querySelector('.form-title').textContent = '¡Gracias! Te escribimos pronto.';
-  toast('Recibimos tu pedido. Te escribimos por email en menos de 48 h hábiles.');
+  if (!goThanks({ kind: 'empresa', eventId, name, company })) {
+    companyForm.querySelector('.form-title').textContent = '¡Gracias! Te escribimos pronto.';
+    toast('Recibimos tu pedido. Te escribimos por email en menos de 48 h hábiles.');
+  }
 });

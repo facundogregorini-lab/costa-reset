@@ -41,26 +41,30 @@ const iso = offset => new Date(Date.now() + offset * 864e5 - new Date().getTimez
     await page.click('#reserveForm button[type=submit]');
     check('Departure before arrival is rejected', (await page.textContent('#reserveForm .error')).includes('salida'));
     await page.fill('#to', iso(13)); await page.dispatchEvent('#to', 'change');
-    check('Nights are counted', (await page.textContent('#nights')).includes('3 noches'));
+    check('Nights are counted with an estimated total', (await page.textContent('#nights')).includes('3 noches') && (await page.textContent('#nights')).includes('USD 120'));
     await page.click('#reserveForm button[type=submit]');
     check('Asks how they come', (await page.textContent('#reserveForm .error')).includes('cómo venís'));
     await page.selectOption('#mode', 'Me lo ofrece mi empresa');
+    check('PageView fires on the landing', (await fbqCalls()).some(c => c[0] === 'init' && c[1] === '1671294247882059') && (await fbqCalls()).some(c => c[1] === 'PageView'));
 
-    // Submit opens WhatsApp with the details and stores the booking
+    // Submit opens WhatsApp with the details, stores the booking and moves to the thank-you page
     await page.context().route('https://wa.me/**', r => r.fulfill({ body: 'whatsapp' }));
     const [popup] = await Promise.all([page.waitForEvent('popup'), page.click('#reserveForm button[type=submit]')]);
     const text = decodeURIComponent(new URL(popup.url()).searchParams.get('text'));
     check('WhatsApp opens with the booking', popup.url().startsWith('https://wa.me/5491132524245') && text.includes('Ana Pérez') && text.includes('3 noches') && text.includes('Me lo ofrece mi empresa'));
     await popup.close();
+    await page.waitForURL(/gracias\.html$/);
+    check('Thank-you page greets and summarises', (await page.textContent('h1')).includes('Gracias, Ana') && (await page.textContent('#summary')).includes('3 noches') && (await page.textContent('#steps')).includes('24 h'));
+    check('Thank-you page offers to reopen WhatsApp', (await page.getAttribute('#waButton', 'href')).includes('Ana%20P%C3%A9rez'));
     const leads = (await fbqCalls()).filter(c => c[0] === 'track' && c[1] === 'Lead');
-    check('Pixel is initialised with PageView', (await fbqCalls()).some(c => c[0] === 'init' && c[1] === '1671294247882059') && (await fbqCalls()).some(c => c[1] === 'PageView'));
     check('Booking fires a Lead with an eventID', leads.length === 1 && leads[0][2].content_name === 'reserva' && leads[0][3].eventID?.length > 8);
     const bookingEventId = leads[0][3].eventID;
-    check('Confirmation toast', (await page.textContent('#toast')).includes('WhatsApp'));
-    check('Form resets', (await page.inputValue('#name')) === '' && (await page.textContent('#nights')) === '');
-    await page.waitForTimeout(300);
+    await page.screenshot({ path: path.join(shots, 'gracias.png') });
+    await page.reload();
+    check('Reloading does not count the Lead twice', !(await fbqCalls()).some(c => c[1] === 'Lead') && (await page.textContent('h1')).trim() === '¡Gracias!');
 
     // Company form
+    await page.goto(SITE, { waitUntil: 'load' });
     await page.click('#companyForm button[type=submit]');
     check('Company form validates', (await page.textContent('#companyForm .error')).includes('nombre'));
     await page.fill('#c-name', 'Laura Gómez'); await page.fill('#c-company', 'Acme SA'); await page.fill('#c-email', 'laura@acme');
@@ -68,13 +72,18 @@ const iso = offset => new Date(Date.now() + offset * 864e5 - new Date().getTimez
     await page.click('#companyForm button[type=submit]');
     check('Company email is validated', (await page.textContent('#companyForm .error')).includes('email'));
     await page.fill('#c-email', 'laura@acme.com'); await page.click('#companyForm button[type=submit]');
-    await page.waitForFunction(() => document.querySelector('#companyForm .form-title').textContent.includes('Gracias'));
-    check('Company request is sent', (await page.textContent('#toast')).includes('Recibimos'));
+    await page.waitForURL(/gracias\.html$/);
+    check('Company request lands on its thank-you page', (await page.textContent('#summary')).includes('Acme SA'));
     const companyLead = (await fbqCalls()).filter(c => c[1] === 'Lead').pop();
     check('Company request fires its own Lead', companyLead[2].content_name === 'empresa' && companyLead[3].eventID !== bookingEventId);
-    const [waPopup] = await Promise.all([page.waitForEvent('popup'), page.click('.btn-wa')]);
+
+    // WhatsApp shortcuts
+    await page.goto(SITE, { waitUntil: 'load' });
+    check('Floating WhatsApp button is visible', await page.isVisible('.wa-float'));
+    const [waPopup] = await Promise.all([page.waitForEvent('popup'), page.click('.wa-float')]);
     await waPopup.close();
     check('WhatsApp clicks fire Contact', (await fbqCalls()).some(c => c[1] === 'Contact'));
+    check('Getting-there section is present', (await page.textContent('#llegar')).includes('Mar del Plata'));
 
     // Admin page
     const admin = await browser.newPage();
@@ -110,6 +119,8 @@ const iso = offset => new Date(Date.now() + offset * 864e5 - new Date().getTimez
     check('Sticky CTA hidden on the hero', !(await phone.evaluate(() => document.getElementById('mobileCta').classList.contains('visible'))));
     await phone.evaluate(() => scrollTo({ top: innerHeight * 2, behavior: 'instant' })); await phone.waitForTimeout(600);
     check('Sticky CTA appears after the hero', await phone.evaluate(() => document.getElementById('mobileCta').classList.contains('visible')));
+    await phone.waitForTimeout(500);
+    check('WhatsApp button does not cover the sticky CTA', await phone.evaluate(() => { const a = document.getElementById('mobileCta').getBoundingClientRect(), b = document.querySelector('.wa-float').getBoundingClientRect(); return a.right <= b.left; }));
     await phone.screenshot({ path: path.join(shots, 'mobile-scroll.png') });
     await phone.evaluate(() => document.getElementById('reservar').scrollIntoView({ behavior: 'instant' })); await phone.waitForTimeout(600);
     check('Sticky CTA hides at the form', !(await phone.evaluate(() => document.getElementById('mobileCta').classList.contains('visible'))));

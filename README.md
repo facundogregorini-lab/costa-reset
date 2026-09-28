@@ -9,6 +9,8 @@ Contenido, fotos y estilo tomados de la versión de Lovable (`costa-reset-flow`)
 - Hero con fotos que se alternan, manifiesto, el lugar, habitación, equipos, oferta desde USD 40 por noche y formulario de reserva.
 - **Reserva:** nombre, WhatsApp y fechas. Abre WhatsApp con el mensaje armado (como antes) y además guarda la solicitud en la base, por si la persona no llega a enviar el mensaje.
 - **`/admin.html`:** lista privada de las reservas, protegida con una clave.
+- **Página de gracias** (`gracias.html`) después de cada formulario, con los próximos pasos; ahí se dispara el evento `Lead` del píxel.
+- Botón flotante de WhatsApp, calculadora de precio estimado en el formulario y sección "Cómo llegar" con mapa ilustrativo.
 - Botón fijo "Reservar" en celulares, animaciones suaves (se desactivan con "reducir movimiento"), datos estructurados para Google y vista previa para redes.
 
 ## Propuesta de valor

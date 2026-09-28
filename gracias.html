@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>¡Gracias! · Costa Reset Club</title>
+<meta name="theme-color" content="#131a13">
+<link rel="icon" href="favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .thanks { position: relative; min-height: 100svh; display: grid; align-items: center; color: var(--bg); background: var(--ink); overflow: hidden; }
+  .thanks > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .45; }
+  .thanks::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, hsl(120 18% 9% / .4), hsl(120 18% 9% / .9)); }
+  .thanks > .wrap { position: relative; z-index: 1; padding-top: 7.5rem; padding-bottom: 4rem; }
+  .thanks h1 { font-size: clamp(2.6rem, 1.6rem + 4vw, 5rem); line-height: .98; letter-spacing: -.03em; max-width: 44rem; }
+  .thanks .summary { margin-top: 1.25rem; font-size: 1.15rem; color: hsl(36 38% 93% / .85); max-width: 36rem; }
+  .steps { list-style: none; margin: 2.75rem 0 2.5rem; padding: 0; display: grid; gap: 1rem; max-width: 40rem; counter-reset: step; }
+  .steps li { counter-increment: step; display: grid; grid-template-columns: 2.5rem 1fr; gap: 1rem; align-items: baseline; padding: 1.1rem 0; border-top: 1px solid hsl(36 38% 93% / .15); }
+  .steps li::before { content: counter(step, decimal-leading-zero); font-family: var(--display); font-weight: 300; font-size: 1.25rem; color: hsl(36 38% 93% / .6); }
+  .steps b { display: block; font-weight: 500; }
+  .steps span { color: hsl(36 38% 93% / .7); }
+  .actions { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; align-items: center; }
+  .btn-whatsapp { display: inline-flex; align-items: center; gap: .6rem; background: #25d366; color: #fff; text-decoration: none; font-weight: 600; padding: .95rem 1.5rem; border-radius: 2px; }
+  .brand-top { position: absolute; z-index: 2; top: 1.5rem; left: 0; right: 0; }
+</style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1671294247882059');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1671294247882059&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+<main class="thanks">
+  <img src="img/hero-beach-lg.webp" srcset="img/hero-beach-sm.webp 800w, img/hero-beach-lg.webp 1536w" sizes="100vw" alt="">
+  <div class="brand-top"><div class="wrap"><a href="./" class="brand">Costa Reset <span>Club</span></a></div></div>
+  <div class="wrap">
+    <p class="eyebrow on-dark" id="eyebrow">Recibido</p>
+    <h1 id="title">¡Gracias!</h1>
+    <p class="summary" id="summary">Recibimos tu mensaje. Te respondemos muy pronto.</p>
+    <ol class="steps" id="steps"></ol>
+    <div class="actions">
+      <a class="btn-whatsapp" id="waButton" href="https://wa.me/5491132524245" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.83 9.83 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.23 8.23 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.43-.06-.13-.56-1.35-.77-1.84-.2-.48-.41-.42-.56-.43h-.48a.92.92 0 0 0-.66.31c-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.29Z"/></svg>
+        <span id="waLabel">Escribinos por WhatsApp</span>
+      </a>
+      <a class="link-cta" href="./">Volver al inicio</a>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  let lead = null;
+  try { lead = JSON.parse(sessionStorage.getItem('cr-lead') || 'null'); sessionStorage.removeItem('cr-lead'); } catch {}
+  const pretty = v => new Date(v + 'T12:00:00').toLocaleDateString('es-AR', { day: 'numeric', month: 'long' });
+  const steps = list => $('steps').replaceChildren(...list.map(([b, span]) => {
+    const li = document.createElement('li'), d = document.createElement('div'), bb = document.createElement('b'), s = document.createElement('span');
+    bb.textContent = b; s.textContent = span; d.append(bb, s); li.append(d); return li;
+  }));
+  const first = name => String(name || '').trim().split(/\s+/)[0];
+
+  if (lead?.kind === 'reserva') {
+    $('eyebrow').textContent = 'Pre-reserva recibida';
+    $('title').textContent = `¡Gracias, ${first(lead.name)}!`;
+    $('summary').textContent = `Guardamos tu pre-reserva del ${pretty(lead.from)} al ${pretty(lead.to)} (${lead.nights} ${lead.nights === 1 ? 'noche' : 'noches'}). No pagaste nada.`;
+    steps([
+      ['Enviá el mensaje de WhatsApp', 'Se abrió en otra pestaña con tus datos. Si no lo ves, usá el botón de abajo.'],
+      ['Te confirmamos en menos de 24 h', 'Disponibilidad, precio final y todo lo que incluye tu estadía.'],
+      ['Asegurás tus fechas', 'Si te cierra, dejás una seña y tu lugar queda reservado.'],
+    ]);
+    if (lead.wa) { $('waButton').href = lead.wa; $('waLabel').textContent = 'Abrir el mensaje de WhatsApp'; }
+  } else if (lead?.kind === 'empresa') {
+    $('eyebrow').textContent = 'Pedido recibido';
+    $('title').textContent = `¡Gracias, ${first(lead.name)}!`;
+    $('summary').textContent = `Recibimos el pedido de ${lead.company}. Te escribimos por email en menos de 48 h hábiles.`;
+    steps([
+      ['Revisamos lo que nos contaste', 'Tamaño del equipo, qué les interesa y fechas posibles.'],
+      ['Te mandamos una propuesta', 'Con opciones, precios orientativos y cómo funciona para tu equipo.'],
+      ['Coordinamos una llamada', 'Si te sirve, la ajustamos juntos en 20 minutos.'],
+    ]);
+    $('waLabel').textContent = '¿Querés adelantar? Escribinos';
+  }
+
+  // Conversión: una sola vez por envío (el dato se borra al leerlo) y con el mismo eventID que guarda el servidor.
+  if (lead?.eventId) {
+    try { window.fbq?.('track', 'Lead', { content_name: lead.kind }, { eventID: lead.eventId }); } catch {}
+    try { window.gtag?.('event', 'generate_lead', { form: lead.kind }); } catch {}
+    try { (window.dataLayer ||= []).push({ event: 'lead', form: lead.kind }); } catch {}
+  }
+  document.addEventListener('click', e => {
+    if (e.target.closest('a[href*="wa.me/"]')) { try { window.fbq?.('track', 'Contact'); } catch {} }
+  });
+})();
+</script>
+</body>
+</html>

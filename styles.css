@@ -78,6 +78,7 @@ em { font-style: italic; }
 @media (min-width: 768px) { .hero-inner { padding-bottom: 4rem; } }
 .hero-lead { margin-top: 1.5rem; max-width: 34rem; font-size: clamp(1.05rem, .95rem + .4vw, 1.25rem); color: hsl(36 38% 93% / .85); text-wrap: pretty; }
 .hero-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem; }
+@media (max-width: 480px) { .hero-foot .btn-light { flex: 1 1 100%; text-align: center; padding: 1rem; } .hero-foot .link-cta { margin: 0 auto; } .hero-note { text-align: center; } }
 .hero-note { flex-basis: 100%; font-size: .8rem; letter-spacing: .03em; color: hsl(36 38% 93% / .7); }
 
 /* ---------- Sections ---------- */
@@ -299,6 +300,18 @@ em { font-style: italic; }
 .faq details[open] summary::after { transform: translateY(-50%) rotate(45deg); }
 .faq details p { padding: 0 0 1.5rem; color: var(--muted); max-width: 40rem; }
 
+/* ---------- Cómo llegar ---------- */
+.getting-there { display: grid; gap: 3rem; align-items: center; }
+@media (min-width: 1024px) { .getting-there { grid-template-columns: 6fr 5fr; gap: 5rem; } }
+.routes { list-style: none; margin: 2rem 0 .75rem; padding: 0; }
+.routes li { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding: .9rem 0; border-bottom: 1px solid var(--line); }
+.routes li:first-child { border-top: 1px solid var(--line); }
+.routes span { color: var(--muted); }
+.routes b { font-weight: 500; }
+.map { margin: 0; }
+.map svg { display: block; width: 100%; height: auto; border-radius: 2px; }
+.map figcaption { margin-top: .6rem; font-size: .75rem; color: var(--muted); }
+
 /* ---------- Footer ---------- */
 .footer { background: var(--ink); color: var(--bg); padding: 4rem 0 6rem; }
 @media (min-width: 768px) { .footer { padding-bottom: 4rem; } }
@@ -314,9 +327,19 @@ em { font-style: italic; }
 .footer-base { margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid hsl(36 38% 93% / .1); display: flex; flex-direction: column; gap: 1rem; font-size: .75rem; color: hsl(36 38% 93% / .5); }
 @media (min-width: 640px) { .footer-base { flex-direction: row; justify-content: space-between; } }
 
+/* ---------- WhatsApp flotante ---------- */
+.wa-float {
+  position: fixed; z-index: 41; right: 1rem; bottom: max(1rem, env(safe-area-inset-bottom));
+  width: 3.4rem; height: 3.4rem; border-radius: 50%; display: grid; place-items: center;
+  background: #25d366; color: #fff; box-shadow: 0 10px 25px -8px hsl(120 18% 8% / .5); transition: transform .3s var(--ease);
+}
+.wa-float:hover { transform: scale(1.06); }
+@media (max-width: 767px) { .js .wa-float:not(.visible) { transform: translateY(160%); } }
+@media (min-width: 768px) { .wa-float { right: 1.5rem; bottom: 1.5rem; width: 3.75rem; height: 3.75rem; } }
+
 /* ---------- Mobile CTA & toast ---------- */
 .mobile-cta {
-  position: fixed; z-index: 40; left: 1rem; right: 1rem; bottom: max(1rem, env(safe-area-inset-bottom));
+  position: fixed; z-index: 40; left: 1rem; right: 5.1rem; bottom: max(1rem, env(safe-area-inset-bottom));
   text-align: center; text-decoration: none; font-weight: 500; font-size: .95rem;
   background: var(--fg); color: var(--bg); padding: 1rem; border-radius: 2px;
   box-shadow: 0 12px 30px -10px hsl(120 18% 8% / .5);
