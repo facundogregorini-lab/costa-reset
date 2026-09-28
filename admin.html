@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Reservas · Costa Reset Club</title>
+<title>Pedidos · Costa Reset Club</title>
 <link rel="icon" href="favicon.ico">
 <style>
   :root { --bg: hsl(36 38% 93%); --fg: hsl(120 18% 10%); --muted: hsl(120 10% 36%); --line: hsl(36 18% 82%); --card: hsl(36 30% 96%); --accent: hsl(110 16% 30%); }
@@ -23,35 +23,54 @@
   th { font-weight: 500; font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
   tr:last-child td { border-bottom: 0; }
   a { color: var(--accent); }
+  .summary { display: grid; grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr)); gap: .75rem; margin-bottom: 1.5rem; }
+  .summary div { background: var(--card); border: 1px solid var(--line); border-radius: 2px; padding: .9rem 1rem; font-size: .85rem; color: var(--muted); }
+  .summary b { display: block; font-size: 1.6rem; font-weight: 400; color: var(--fg); }
+  td { vertical-align: top; }
 </style>
 </head>
 <body>
 <main>
-  <h1>Reservas</h1>
-  <p>Las solicitudes que llegan desde el formulario de la landing, de la más nueva a la más vieja.</p>
-  <form id="login"><input id="key" type="password" placeholder="Clave de administración" autocomplete="current-password" required><button>Ver reservas</button></form>
+  <h1>Pedidos</h1>
+  <p>Pre-reservas y pedidos de empresas que llegan desde la landing, del más nuevo al más viejo.</p>
+  <form id="login"><input id="key" type="password" placeholder="Clave de administración" autocomplete="current-password" required><button>Ver pedidos</button></form>
   <p id="status" role="status"></p>
-  <div class="table" id="tableWrap" hidden><table><thead><tr><th>Recibida</th><th>Nombre</th><th>WhatsApp</th><th>Llegada</th><th>Salida</th><th>Noches</th><th>Equipo</th></tr></thead><tbody id="rows"></tbody></table></div>
+  <div id="summary" class="summary" hidden></div>
+  <div class="table" id="tableWrap" hidden><table><thead><tr><th>Recibido</th><th>Tipo</th><th>Nombre</th><th>Contacto</th><th>Detalle</th><th>Origen</th></tr></thead><tbody id="rows"></tbody></table></div>
 </main>
 <script>
 const $ = id => document.getElementById(id);
-const fmt = d => new Date(d + 'T12:00:00').toLocaleDateString('es-AR', { day: 'numeric', month: 'short', year: 'numeric' });
-function cell(content) { const td = document.createElement('td'); td.append(content); return td; }
+const fmt = d => new Date(d + 'T12:00:00').toLocaleDateString('es-AR', { day: 'numeric', month: 'short' });
+const origin = s => !s ? 'Directo' : s.utm_source ? [s.utm_source, s.utm_campaign].filter(Boolean).join(' · ') : s.gclid ? 'Google Ads' : s.fbclid ? 'Meta' : s.referrer ? new URL(s.referrer).hostname : 'Directo';
+function cell(...content) { const td = document.createElement('td'); td.append(...content); return td; }
+function link(href, text) { const a = document.createElement('a'); a.href = href; a.target = '_blank'; a.rel = 'noopener'; a.textContent = text; return a; }
+function stat(label, value) { const d = document.createElement('div'); const b = document.createElement('b'); b.textContent = value; d.append(b, label); return d; }
 async function load(key) {
   $('status').className = ''; $('status').textContent = 'Cargando…';
   const r = await fetch('/api/reserva', { headers: { Authorization: 'Bearer ' + key } }).catch(() => null);
   const j = r ? await r.json().catch(() => ({})) : {};
-  if (!r || !r.ok) { $('status').className = 'error'; $('status').textContent = j.error || 'No pudimos cargar las reservas.'; return; }
+  if (!r || !r.ok) { $('status').className = 'error'; $('status').textContent = j.error || 'No pudimos cargar los pedidos.'; return; }
   try { sessionStorage.setItem('reservas-key', key); } catch {}
-  $('status').textContent = j.reservas.length ? j.reservas.length + ' reservas' : 'Todavía no hay reservas.';
-  $('rows').replaceChildren(...j.reservas.map(x => {
+  const list = j.reservas.map(x => ({ ...x, type: x.type || 'persona' }));
+  const people = list.filter(x => x.type === 'persona'), companies = list.filter(x => x.type === 'empresa');
+  const nights = people.reduce((n, x) => n + (x.nights || 0), 0);
+  const byOrigin = {};
+  for (const x of list) byOrigin[origin(x.source)] = (byOrigin[origin(x.source)] || 0) + 1;
+  const top = Object.entries(byOrigin).sort((a, b) => b[1] - a[1]).slice(0, 4);
+  $('summary').replaceChildren(stat('pre-reservas', people.length), stat('noches pedidas', nights), stat('empresas', companies.length), ...top.map(([o, n]) => stat(o, n)));
+  $('summary').hidden = !list.length;
+  $('status').textContent = list.length ? '' : 'Todavía no hay pedidos.';
+  $('rows').replaceChildren(...list.map(x => {
     const tr = document.createElement('tr');
-    const wa = document.createElement('a');
-    wa.href = 'https://wa.me/' + x.whatsapp.replace(/\D/g, ''); wa.target = '_blank'; wa.rel = 'noopener'; wa.textContent = x.whatsapp;
-    tr.append(cell(new Date(x.createdAt).toLocaleString('es-AR', { dateStyle: 'short', timeStyle: 'short' })), cell(x.name), cell(wa), cell(fmt(x.from)), cell(fmt(x.to)), cell(String(x.nights)), cell(x.team ? 'Sí' : ''));
+    const when = new Date(x.createdAt).toLocaleString('es-AR', { dateStyle: 'short', timeStyle: 'short' });
+    if (x.type === 'empresa') {
+      tr.append(cell(when), cell('Empresa'), cell(x.name, document.createElement('br'), x.company), cell(link('mailto:' + x.email, x.email)), cell(x.interest + ' · ' + x.size + ' personas'), cell(origin(x.source)));
+    } else {
+      tr.append(cell(when), cell('Persona'), cell(x.name), cell(link('https://wa.me/' + x.whatsapp.replace(/\D/g, ''), x.whatsapp)), cell(fmt(x.from) + ' → ' + fmt(x.to) + ' (' + x.nights + ' n.)' + (x.mode ? ' · ' + x.mode : x.team ? ' · Con mi equipo' : '')), cell(origin(x.source)));
+    }
     return tr;
   }));
-  $('tableWrap').hidden = !j.reservas.length;
+  $('tableWrap').hidden = !list.length;
 }
 $('login').onsubmit = e => { e.preventDefault(); load($('key').value); };
 try { const saved = sessionStorage.getItem('reservas-key'); if (saved) load(saved); } catch {}

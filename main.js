@@ -3,7 +3,26 @@ const WHATSAPP = '5491132524245';
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $ = id => document.getElementById(id);
 
-document.getElementById('year').textContent = new Date().getFullYear();
+$('year').textContent = new Date().getFullYear();
+
+// ---------- Origen de la visita (UTM de los anuncios), guardado en la primera página vista ----------
+const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid', 'fbclid'];
+function readSource() {
+  const params = new URLSearchParams(location.search);
+  const fresh = Object.fromEntries(UTM_KEYS.filter(k => params.get(k)).map(k => [k, params.get(k).slice(0, 120)]));
+  try {
+    if (Object.keys(fresh).length) sessionStorage.setItem('cr-source', JSON.stringify(fresh));
+    return JSON.parse(sessionStorage.getItem('cr-source') || 'null') || (document.referrer ? { referrer: document.referrer.slice(0, 120) } : {});
+  } catch { return fresh; }
+}
+const source = readSource();
+
+// Evento de conversión para los píxeles de Meta y Google, si están instalados.
+function trackLead(kind) {
+  try { window.fbq?.('track', 'Lead', { content_name: kind }); } catch {}
+  try { window.gtag?.('event', 'generate_lead', { form: kind }); } catch {}
+  try { (window.dataLayer ||= []).push({ event: 'lead', form: kind }); } catch {}
+}
 
 // ---------- Hero: fotos que se alternan ----------
 const slides = [...document.querySelectorAll('.hero-slides img')];
@@ -30,13 +49,19 @@ if ('IntersectionObserver' in window && !reduced) {
   revealed.forEach(el => el.classList.add('in'));
 }
 
-// ---------- Botón fijo en celulares: aparece después del hero y se oculta en el formulario ----------
+// ---------- Botón fijo en celulares: aparece después del hero y se oculta en los formularios ----------
 const mobileCta = $('mobileCta');
 if ('IntersectionObserver' in window) {
-  let pastHero = false, atForm = false;
-  const sync = () => mobileCta.classList.toggle('visible', pastHero && !atForm);
+  let pastHero = false;
+  const atForm = new Set();
+  const sync = () => mobileCta.classList.toggle('visible', pastHero && atForm.size === 0);
   new IntersectionObserver(([e]) => { pastHero = !e.isIntersecting; sync(); }).observe(document.querySelector('.hero'));
-  new IntersectionObserver(([e]) => { atForm = e.isIntersecting; sync(); }, { threshold: 0.05 }).observe($('reservar'));
+  const formObserver = new IntersectionObserver(entries => {
+    for (const e of entries) e.isIntersecting ? atForm.add(e.target) : atForm.delete(e.target);
+    sync();
+  }, { threshold: 0.05 });
+  formObserver.observe($('reservar'));
+  formObserver.observe($('companyForm'));
 }
 
 // ---------- Aviso breve ----------
@@ -49,8 +74,32 @@ function toast(text) {
   toastTimer = setTimeout(() => t.classList.remove('visible'), 4000);
 }
 
-// ---------- Reserva ----------
-const form = $('reserveForm');
+// ---------- Utilidades de formularios ----------
+function failer(form) {
+  const box = form.querySelector('.error');
+  return (input, message) => {
+    box.textContent = message;
+    form.querySelectorAll('[aria-invalid]').forEach(el => el.removeAttribute('aria-invalid'));
+    if (input) { input.setAttribute('aria-invalid', 'true'); input.focus(); }
+    return false;
+  };
+}
+function save(payload) {
+  // Se guarda en el servidor (si está configurado) por si la persona no llega a enviar el WhatsApp.
+  fetch('/api/reserva', {
+    method: 'POST',
+    keepalive: true,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ...payload, source }),
+  }).catch(() => {});
+}
+for (const form of document.querySelectorAll('form.form')) {
+  form.addEventListener('input', e => e.target.removeAttribute('aria-invalid'));
+  form.addEventListener('change', e => e.target.removeAttribute('aria-invalid'));
+}
+
+// ---------- Reserva de personas ----------
+const reserveForm = $('reserveForm');
 const from = $('from'), to = $('to');
 const iso = d => new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
 const parse = value => (value ? new Date(value + 'T12:00:00') : null);
@@ -65,8 +114,7 @@ function nights() {
 }
 function updateNights() {
   if (from.value) {
-    const next = new Date(parse(from.value).getTime() + 86400000);
-    to.min = iso(next);
+    to.min = iso(new Date(parse(from.value).getTime() + 86400000));
     if (to.value && to.value <= from.value) to.value = '';
   }
   const n = nights();
@@ -75,17 +123,10 @@ function updateNights() {
 from.addEventListener('change', () => { updateNights(); if (!to.value) to.focus(); });
 to.addEventListener('change', updateNights);
 
-function fail(input, message) {
-  $('formError').textContent = message;
-  form.querySelectorAll('[aria-invalid]').forEach(el => el.removeAttribute('aria-invalid'));
-  if (input) { input.setAttribute('aria-invalid', 'true'); input.focus(); }
-}
-
-form.addEventListener('input', e => { e.target.removeAttribute('aria-invalid'); });
-
-form.addEventListener('submit', e => {
+reserveForm.addEventListener('submit', e => {
   e.preventDefault();
-  const data = Object.fromEntries(new FormData(form));
+  const fail = failer(reserveForm);
+  const data = Object.fromEntries(new FormData(reserveForm));
   const name = (data.name || '').trim();
   const phone = (data.whatsapp || '').trim();
   if (name.length < 2) return fail($('name'), 'Decinos tu nombre.');
@@ -93,32 +134,56 @@ form.addEventListener('submit', e => {
   if (!from.value) return fail(from, 'Elegí tu fecha de llegada.');
   if (from.value < from.min) return fail(from, 'La llegada tiene que ser desde hoy en adelante.');
   if (!to.value || nights() < 1) return fail(to, 'Elegí una fecha de salida posterior a la llegada.');
+  if (!data.mode) return fail($('mode'), 'Contanos cómo venís.');
   fail(null, '');
   if (data.website) return; // bots
 
   const n = nights();
-  const team = $('team').checked;
-  const lines = [
+  const text = [
     'Hola! Quiero reservar en Costa Reset Club.',
     '',
     `*Nombre:* ${name}`,
     `*WhatsApp:* ${phone}`,
     `*Fechas:* ${pretty(parse(from.value))} — ${pretty(parse(to.value))} (${n} ${n === 1 ? 'noche' : 'noches'})`,
-  ];
-  if (team) lines.push('*Vengo con mi equipo*');
+    `*Cómo vengo:* ${data.mode}`,
+  ].join('\n');
 
   // WhatsApp se abre en el mismo gesto del usuario para que el navegador no lo bloquee.
-  window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank', 'noopener');
-
-  // La reserva también queda guardada en el servidor (si está configurado), por si no llega a enviar el WhatsApp.
-  fetch('/api/reserva', {
-    method: 'POST',
-    keepalive: true,
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, whatsapp: phone, from: from.value, to: to.value, nights: n, team, website: data.website || '' }),
-  }).catch(() => {});
-
+  window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
+  save({ type: 'persona', name, whatsapp: phone, from: from.value, to: to.value, mode: data.mode });
+  trackLead('reserva');
   toast('¡Listo! Abrimos WhatsApp para confirmar tu reserva.');
-  form.reset();
+  reserveForm.reset();
   updateNights();
+});
+
+// ---------- Propuesta para empresas ----------
+const companyForm = $('companyForm');
+companyForm.addEventListener('submit', async e => {
+  e.preventDefault();
+  const fail = failer(companyForm);
+  const data = Object.fromEntries(new FormData(companyForm));
+  const name = (data.name || '').trim(), company = (data.company || '').trim(), email = (data.email || '').trim();
+  if (name.length < 2) return fail($('c-name'), 'Decinos tu nombre.');
+  if (company.length < 2) return fail($('c-company'), '¿En qué empresa trabajás?');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fail($('c-email'), 'Revisá el email.');
+  if (!data.size) return fail($('c-size'), 'Elegí cuántas personas son.');
+  if (!data.interest) return fail($('c-interest'), 'Contanos qué les interesa.');
+  fail(null, '');
+  if (data.website) return;
+
+  const button = companyForm.querySelector('button[type=submit]');
+  button.disabled = true;
+  // Acá no hay WhatsApp de respaldo, así que esperamos la confirmación del servidor.
+  const response = await fetch('/api/reserva', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ type: 'empresa', name, company, email, size: data.size, interest: data.interest, source }),
+  }).catch(() => null);
+  button.disabled = false;
+  if (!response?.ok) return fail(null, 'No pudimos enviar el pedido. Escribinos a hola@costaresetclub.com y te respondemos igual.');
+  trackLead('empresa');
+  companyForm.reset();
+  companyForm.querySelector('.form-title').textContent = '¡Gracias! Te escribimos pronto.';
+  toast('Recibimos tu pedido. Te escribimos por email en menos de 48 h hábiles.');
 });

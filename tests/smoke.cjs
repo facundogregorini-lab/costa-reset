@@ -14,10 +14,11 @@ const iso = offset => new Date(Date.now() + offset * 864e5 - new Date().getTimez
   try {
     const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
     page.on('pageerror', e => errors.push(e.message));
-    await page.goto(SITE, { waitUntil: 'load' });
-    check('Title and headline', (await page.title()).includes('Costa Reset Club') && (await page.textContent('h1')).includes('Encontrá tu mejor versión'));
-    check('All sections present', await page.evaluate(() => ['manifiesto', 'lugar', 'habitacion', 'equipos', 'oferta', 'reservar'].every(id => document.getElementById(id))));
-    check('Price shown', (await page.textContent('#oferta')).includes('USD 40'));
+    await page.goto(SITE + '/?utm_source=meta&utm_campaign=validacion-oct', { waitUntil: 'load' });
+    check('Title and headline', (await page.title()).includes('Costa Reset Club') && (await page.textContent('h1')).includes('frente al mar'));
+    check('All sections present', await page.evaluate(() => ['para-quien', 'dia', 'lugar', 'habitacion', 'empresas', 'comunidad', 'precios', 'preguntas', 'reservar'].every(id => document.getElementById(id))));
+    check('Price shown', (await page.textContent('#precios')).includes('USD 40'));
+    await page.click('#preguntas summary >> nth=2'); check('FAQ opens', await page.isVisible('#preguntas details:nth-child(3) p'));
     await page.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 500) { scrollTo({ top: y, behavior: 'instant' }); await new Promise(r => setTimeout(r, 80)); } scrollTo({ top: 0, behavior: 'instant' }); });
     await page.waitForTimeout(1200);
     check('All images load', await page.evaluate(() => [...document.images].every(i => i.complete && i.naturalWidth > 0)));
@@ -27,28 +28,41 @@ const iso = offset => new Date(Date.now() + offset * 864e5 - new Date().getTimez
 
     // Form validation
     await page.click('#reserveForm button[type=submit]');
-    check('Empty form asks for the name', (await page.textContent('#formError')).includes('nombre'));
+    check('Empty form asks for the name', (await page.textContent('#reserveForm .error')).includes('nombre'));
     await page.fill('#name', 'Ana Pérez'); await page.fill('#whatsapp', '12');
     await page.click('#reserveForm button[type=submit]');
-    check('Invalid WhatsApp is rejected', (await page.textContent('#formError')).includes('WhatsApp'));
+    check('Invalid WhatsApp is rejected', (await page.textContent('#reserveForm .error')).includes('WhatsApp'));
     await page.fill('#whatsapp', '+54 9 11 5555-1234');
     await page.fill('#from', iso(10)); await page.dispatchEvent('#from', 'change');
     await page.fill('#to', iso(8)); await page.dispatchEvent('#to', 'change');
     await page.click('#reserveForm button[type=submit]');
-    check('Departure before arrival is rejected', (await page.textContent('#formError')).includes('salida'));
+    check('Departure before arrival is rejected', (await page.textContent('#reserveForm .error')).includes('salida'));
     await page.fill('#to', iso(13)); await page.dispatchEvent('#to', 'change');
     check('Nights are counted', (await page.textContent('#nights')).includes('3 noches'));
-    await page.check('#team');
+    await page.click('#reserveForm button[type=submit]');
+    check('Asks how they come', (await page.textContent('#reserveForm .error')).includes('cómo venís'));
+    await page.selectOption('#mode', 'Me lo ofrece mi empresa');
 
     // Submit opens WhatsApp with the details and stores the booking
     await page.context().route('https://wa.me/**', r => r.fulfill({ body: 'whatsapp' }));
     const [popup] = await Promise.all([page.waitForEvent('popup'), page.click('#reserveForm button[type=submit]')]);
     const text = decodeURIComponent(new URL(popup.url()).searchParams.get('text'));
-    check('WhatsApp opens with the booking', popup.url().startsWith('https://wa.me/5491132524245') && text.includes('Ana Pérez') && text.includes('3 noches') && text.includes('equipo'));
+    check('WhatsApp opens with the booking', popup.url().startsWith('https://wa.me/5491132524245') && text.includes('Ana Pérez') && text.includes('3 noches') && text.includes('Me lo ofrece mi empresa'));
     await popup.close();
     check('Confirmation toast', (await page.textContent('#toast')).includes('WhatsApp'));
     check('Form resets', (await page.inputValue('#name')) === '' && (await page.textContent('#nights')) === '');
     await page.waitForTimeout(300);
+
+    // Company form
+    await page.click('#companyForm button[type=submit]');
+    check('Company form validates', (await page.textContent('#companyForm .error')).includes('nombre'));
+    await page.fill('#c-name', 'Laura Gómez'); await page.fill('#c-company', 'Acme SA'); await page.fill('#c-email', 'laura@acme');
+    await page.selectOption('#c-size', '51 a 200'); await page.selectOption('#c-interest', 'Offsite de equipo');
+    await page.click('#companyForm button[type=submit]');
+    check('Company email is validated', (await page.textContent('#companyForm .error')).includes('email'));
+    await page.fill('#c-email', 'laura@acme.com'); await page.click('#companyForm button[type=submit]');
+    await page.waitForFunction(() => document.querySelector('#companyForm .form-title').textContent.includes('Gracias'));
+    check('Company request is sent', (await page.textContent('#toast')).includes('Recibimos'));
 
     // Admin page
     const admin = await browser.newPage();
@@ -59,13 +73,16 @@ const iso = offset => new Date(Date.now() + offset * 864e5 - new Date().getTimez
     check('Admin rejects a wrong key', true);
     await admin.fill('#key', 'clave-local-123'); await admin.click('#login button');
     await admin.waitForSelector('#rows tr');
-    const row = await admin.textContent('#rows tr');
-    check('Admin lists the booking', row.includes('Ana Pérez') && row.includes('3') && row.includes('Sí'));
+    const rows = await admin.$$eval('#rows tr', trs => trs.map(t => t.textContent));
+    check('Admin lists the company request', rows[0].includes('Acme SA') && rows[0].includes('Offsite') && rows[0].includes('meta · validacion-oct'));
+    check('Admin lists the booking with its source', rows[1].includes('Ana Pérez') && rows[1].includes('3 n.') && rows[1].includes('Me lo ofrece mi empresa') && rows[1].includes('meta · validacion-oct'));
+    const summary = await admin.textContent('#summary');
+    check('Admin summary counts leads by campaign', summary.includes('1pre-reservas') && summary.includes('3noches') && summary.includes('1empresas') && summary.includes('2meta · validacion-oct'));
     await admin.screenshot({ path: path.join(shots, 'admin.png') });
 
     // API guards
     const post = body => fetch(SITE + '/api/reserva', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-    check('API rejects incomplete data', (await post({ name: 'x' })).status === 400);
+    check('API rejects incomplete data', (await post({ name: 'x' })).status === 400 && (await post({ type: 'empresa', name: 'Ana', company: 'X', email: 'nope' })).status === 400);
     const before = (await (await fetch(SITE + '/api/reserva', { headers: { Authorization: 'Bearer clave-local-123' } })).json()).reservas.length;
     await post({ name: 'Bot', whatsapp: '123456789', from: iso(2), to: iso(4), website: 'spam' });
     const after = (await (await fetch(SITE + '/api/reserva', { headers: { Authorization: 'Bearer clave-local-123' } })).json()).reservas.length;
@@ -89,7 +106,7 @@ const iso = offset => new Date(Date.now() + offset * 864e5 - new Date().getTimez
     // Reduced motion shows everything without animating
     const calm = await browser.newPage({ reducedMotion: 'reduce' });
     await calm.goto(SITE, { waitUntil: 'load' });
-    check('Reduced motion keeps content visible', await calm.evaluate(() => getComputedStyle(document.querySelector('#manifiesto .reveal')).opacity === '1'));
+    check('Reduced motion keeps content visible', await calm.evaluate(() => getComputedStyle(document.querySelector('#para-quien .reveal')).opacity === '1'));
 
     check('No uncaught browser errors', errors.length === 0);
     console.log(JSON.stringify({ passed: reports.length, errors }, null, 2));

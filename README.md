@@ -11,6 +11,16 @@ Contenido, fotos y estilo tomados de la versión de Lovable (`costa-reset-flow`)
 - **`/admin.html`:** lista privada de las reservas, protegida con una clave.
 - Botón fijo "Reservar" en celulares, animaciones suaves (se desactivan con "reducir movimiento"), datos estructurados para Google y vista previa para redes.
 
+## Propuesta de valor
+
+Dos públicos con su propio camino: **profesionales remotos** (pre-reserva con fechas, que abre WhatsApp) y **empresas** (pedido de propuesta: beneficio de workation, offsites o eventos). La sección **Comunidad** presenta las semanas temáticas con startups, fondos e industrias como calendario en armado de la primera temporada.
+
+## Medir los anuncios
+
+- Cada pedido guarda de dónde vino: `utm_source`, `utm_campaign`, etc., `gclid` o `fbclid`. Usá UTM en todos los anuncios, por ejemplo `?utm_source=meta&utm_campaign=remotos-oct`.
+- `/admin.html` muestra el total de pre-reservas, noches pedidas, pedidos de empresas y los pedidos por campaña.
+- Si instalás el píxel de Meta o la etiqueta de Google en `index.html` (hay un comentario que marca el lugar), cada formulario envía el evento de conversión `Lead` / `generate_lead`.
+
 ## Publicar en Vercel
 
 1. **Add New → Project** e importá `costa-reset`. Framework: **Other**, sin comando de build.

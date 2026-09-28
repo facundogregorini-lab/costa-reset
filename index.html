@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Costa Reset Club · Cowork y coliving frente al mar en Chapadmalal</title>
-<meta name="description" content="Un refugio frente al océano para profesionales remotos. Cowork, habitación, gimnasio, pileta y comida viva en Chapadmalal. Todo incluido desde USD 40 por noche.">
+<title>Costa Reset Club · Coliving y cowork frente al mar para equipos remotos</title>
+<meta name="description" content="Coliving y cowork premium en la Costa Atlántica para profesionales remotos y empresas. Cowork con vista, boxes para videollamadas, surf, gym, pileta y comida saludable. Pre-reservá sin pagar.">
 <meta name="theme-color" content="#131a13">
 <link rel="icon" href="favicon.ico">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_AR">
-<meta property="og:title" content="Costa Reset Club · Workation frente al mar en Chapadmalal">
-<meta property="og:description" content="Un refugio frente al océano para los que eligen trabajar distinto. Todo incluido desde USD 40 por noche.">
+<meta property="og:title" content="Costa Reset Club · Tu semana de trabajo, frente al mar">
+<meta property="og:description" content="Coliving y cowork premium en la Costa Atlántica para profesionales remotos y empresas que cuidan a su gente.">
 <meta property="og:image" content="/img/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,21 +19,23 @@
 <link rel="preload" as="image" href="img/hero-desk-lg.webp" imagesrcset="img/hero-desk-sm.webp 800w, img/hero-desk-lg.webp 1152w" imagesizes="100vw" fetchpriority="high">
 <link rel="stylesheet" href="styles.css">
 <script>document.documentElement.classList.add('js')</script>
+<!-- Píxeles de anuncios (Meta / Google): pegalos acá. main.js ya envía el evento "Lead" en cada formulario. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "LodgingBusiness",
   "name": "Costa Reset Club",
-  "description": "Cowork y coliving frente al mar para profesionales remotos.",
+  "description": "Coliving y cowork premium frente al mar para profesionales remotos y empresas.",
   "address": { "@type": "PostalAddress", "addressLocality": "Chapadmalal", "addressRegion": "Buenos Aires", "addressCountry": "AR" },
   "telephone": "+54 9 11 3252-4245",
   "email": "hola@costaresetclub.com",
   "priceRange": "Desde USD 40 por noche",
   "amenityFeature": [
-    { "@type": "LocationFeatureSpecification", "name": "Cowork con WiFi", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Cowork", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Boxes para videollamadas", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Salas de reunión", "value": true },
     { "@type": "LocationFeatureSpecification", "name": "Gimnasio", "value": true },
-    { "@type": "LocationFeatureSpecification", "name": "Piscina", "value": true },
-    { "@type": "LocationFeatureSpecification", "name": "Sala de reuniones", "value": true }
+    { "@type": "LocationFeatureSpecification", "name": "Piscina", "value": true }
   ]
 }
 </script>
@@ -46,80 +48,139 @@
     <a href="#top" class="brand">Costa Reset <span>Club</span></a>
     <nav class="nav-links" aria-label="Secciones">
       <a href="#lugar">El lugar</a>
-      <a href="#equipos">Equipos</a>
-      <a href="#oferta">Oferta</a>
+      <a href="#empresas">Empresas</a>
+      <a href="#comunidad">Comunidad</a>
+      <a href="#precios">Precios</a>
     </nav>
     <a href="#reservar" class="nav-cta">Reservar</a>
   </div>
 </header>
 
 <main>
+  <!-- ============ HERO ============ -->
   <section id="top" class="hero" aria-label="Costa Reset Club">
     <div class="hero-slides" aria-hidden="true">
       <img class="is-active" src="img/hero-desk-lg.webp" srcset="img/hero-desk-sm.webp 800w, img/hero-desk-lg.webp 1152w" sizes="100vw" alt="" fetchpriority="high">
       <img src="img/hero-cowork-lg.webp" srcset="img/hero-cowork-sm.webp 800w, img/hero-cowork-lg.webp 1376w" sizes="100vw" alt="" loading="lazy">
+      <img src="img/surf-walk-lg.webp" srcset="img/surf-walk-sm.webp 800w, img/surf-walk-lg.webp 1024w" sizes="100vw" alt="" loading="lazy">
       <img src="img/pool-lg.webp" srcset="img/pool-sm.webp 800w, img/pool-lg.webp 1200w" sizes="100vw" alt="" loading="lazy">
-      <img src="img/gym-lg.webp" srcset="img/gym-sm.webp 800w, img/gym-lg.webp 1152w" sizes="100vw" alt="" loading="lazy">
-      <img src="img/food-lg.webp" srcset="img/food-sm.webp 800w, img/food-lg.webp 1152w" sizes="100vw" alt="" loading="lazy">
-      <img src="img/hero-aerial-lg.webp" srcset="img/hero-aerial-sm.webp 800w, img/hero-aerial-lg.webp 1200w" sizes="100vw" alt="" loading="lazy">
+      <img src="img/coast-aerial-lg.webp" srcset="img/coast-aerial-sm.webp 800w, img/coast-aerial-lg.webp 1536w" sizes="100vw" alt="" loading="lazy">
     </div>
     <div class="hero-shade"></div>
     <div class="wrap hero-inner">
-      <p class="eyebrow on-dark fade" style="--d:150ms">Chapadmalal · Argentina</p>
-      <h1 class="hero-title fade-up" style="--d:300ms">Encontrá tu mejor versión</h1>
-      <div class="hero-foot">
-        <p class="hero-lead fade-up" style="--d:600ms">Un refugio frente al océano para los que eligen trabajar distinto.</p>
-        <a href="#reservar" class="link-cta fade" style="--d:800ms">Reservar mi lugar</a>
+      <p class="eyebrow on-dark fade" style="--d:150ms">Costa Atlántica · Chapadmalal</p>
+      <div>
+        <h1 class="hero-title fade-up" style="--d:300ms">Tu semana de trabajo, frente al mar.</h1>
+        <p class="hero-lead fade-up" style="--d:500ms">Coliving y cowork premium para profesionales remotos y equipos. Trabajás con foco, entrenás, surfeás y volvés con otra energía.</p>
+      </div>
+      <div class="hero-foot fade" style="--d:750ms">
+        <a href="#reservar" class="btn-light">Reservar mi lugar</a>
+        <a href="#empresas" class="link-cta">Soy empresa →</a>
+        <p class="hero-note">Pre-reserva sin pago · Respuesta en menos de 24 h</p>
       </div>
     </div>
   </section>
 
-  <section id="manifiesto" class="section">
+  <!-- ============ PARA QUIÉN ============ -->
+  <section id="para-quien" class="section">
     <div class="wrap">
-      <p class="eyebrow reveal">Manifiesto</p>
-      <h2 class="display reveal" style="--d:120ms">Productividad y bienestar van de la mano.<span class="muted"> Te invitamos a explorarlo.</span></h2>
-      <ol class="manifesto">
-        <li class="reveal" style="--d:200ms"><span>01</span><div><h3>Océano</h3><p>como ventana, no como postal.</p></div></li>
-        <li class="reveal" style="--d:280ms"><span>02</span><div><h3>Foco</h3><p>WiFi serio, silencio real, cero ruido.</p></div></li>
-        <li class="reveal" style="--d:360ms"><span>03</span><div><h3>Cuerpo</h3><p>surf al amanecer, gym, pileta, comida viva.</p></div></li>
-        <li class="reveal" style="--d:440ms"><span>04</span><div><h3>Gente</h3><p>profesionales remotos. Conversaciones que mueven.</p></div></li>
+      <p class="eyebrow reveal">Para quién es</p>
+      <h2 class="display reveal" style="--d:120ms">Productividad y bienestar van de la mano.<span class="muted"> Acá se nota.</span></h2>
+      <div class="audiences">
+        <article class="reveal" style="--d:200ms">
+          <span>01</span>
+          <h3>Profesionales remotos</h3>
+          <p>Cambiás el escritorio de tu casa por el mar unos días, sin cortar con el trabajo ni con tu rutina.</p>
+          <a href="#reservar" class="link-small">Reservar fechas →</a>
+        </article>
+        <article class="reveal" style="--d:280ms">
+          <span>02</span>
+          <h3>Empresas con trabajo remoto</h3>
+          <p>Un beneficio concreto para atraer y retener talento: días de trabajo en la costa para tu gente.</p>
+          <a href="#empresas" class="link-small">Ver planes para empresas →</a>
+        </article>
+        <article class="reveal" style="--d:360ms">
+          <span>03</span>
+          <h3>Equipos y startups</h3>
+          <p>Offsites, planificación y semanas temáticas con founders, fondos de inversión y gente de tu industria.</p>
+          <a href="#comunidad" class="link-small">Conocer la comunidad →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ UN DÍA ============ -->
+  <section id="dia" class="section day-section">
+    <div class="wrap day">
+      <div class="reveal">
+        <p class="eyebrow">Un día en Costa Reset</p>
+        <h2 class="display">Una jornada normal.<br><em class="muted">Solo que frente al mar.</em></h2>
+        <p class="lead">Nada es obligatorio: cumplís tu horario y el resto lo armás vos.</p>
+      </div>
+      <ol class="timeline reveal" style="--d:120ms">
+        <li><time>07:00</time><p>Surf o running por la costa.</p></li>
+        <li><time>08:30</time><p>Desayuno en la estación saludable.</p></li>
+        <li><time>09:00</time><p>Bloque de foco en el cowork, con vista al mar.</p></li>
+        <li><time>13:00</time><p>Almuerzo y una pausa de verdad.</p></li>
+        <li><time>14:00</time><p>Calls en los boxes y reuniones en sala.</p></li>
+        <li><time>18:30</time><p>Gym, pileta o clase de fitness.</p></li>
+        <li><time>20:30</time><p>Cena y charla con la comunidad.</p></li>
       </ol>
     </div>
   </section>
 
+  <!-- ============ EL LUGAR ============ -->
   <section id="lugar" class="section tight-top">
     <div class="wrap">
       <div class="reveal section-head">
         <p class="eyebrow">El lugar</p>
         <h2 class="display">Todo, a 30 segundos.</h2>
+        <p class="lead">Instalaciones pensadas primero para trabajar bien. Después, para todo lo demás.</p>
       </div>
       <div class="amenities">
         <article class="amenity reveal">
-          <img src="img/gym-lg.webp" srcset="img/gym-sm.webp 800w, img/gym-lg.webp 1152w" sizes="(min-width: 768px) 50vw, 100vw" alt="Gimnasio con vista al mar" loading="lazy">
-          <div><p>Gimnasio</p><h3>Entrená con vista al mar.</h3></div>
+          <img src="img/hero-cowork-lg.webp" srcset="img/hero-cowork-sm.webp 800w, img/hero-cowork-lg.webp 1376w" sizes="(min-width: 1024px) 25vw, 50vw" alt="Cowork con vista al océano" loading="lazy">
+          <div><p>Cowork</p><h3>Escritorios con vista al mar.</h3></div>
         </article>
-        <article class="amenity reveal" style="--d:100ms">
-          <img src="img/pool-lg.webp" srcset="img/pool-sm.webp 800w, img/pool-lg.webp 1200w" sizes="(min-width: 768px) 50vw, 100vw" alt="Piscina al atardecer" loading="lazy">
-          <div><p>Piscina</p><h3>Cortá el día.</h3></div>
+        <article class="amenity reveal" style="--d:60ms">
+          <img src="img/phonebooth-lg.webp" srcset="img/phonebooth-sm.webp 800w, img/phonebooth-lg.webp 1024w" sizes="(min-width: 1024px) 25vw, 50vw" alt="Box insonorizado para videollamadas" loading="lazy">
+          <div><p>Boxes</p><h3>Videollamadas sin ruido.</h3></div>
         </article>
-        <article class="amenity reveal" style="--d:200ms">
-          <img src="img/food-lg.webp" srcset="img/food-sm.webp 800w, img/food-lg.webp 1152w" sizes="(min-width: 768px) 50vw, 100vw" alt="Estación de comida saludable" loading="lazy">
-          <div><p>Cocina</p><h3>Comida viva, todo el día.</h3></div>
+        <article class="amenity reveal" style="--d:120ms">
+          <img src="img/meeting-room-lg.webp" srcset="img/meeting-room-sm.webp 800w, img/meeting-room-lg.webp 1152w" sizes="(min-width: 1024px) 25vw, 50vw" alt="Sala de reuniones" loading="lazy">
+          <div><p>Salas</p><h3>Reuniones que importan.</h3></div>
         </article>
-        <article class="amenity reveal" style="--d:300ms">
-          <img src="img/meeting-room-lg.webp" srcset="img/meeting-room-sm.webp 800w, img/meeting-room-lg.webp 1152w" sizes="(min-width: 768px) 50vw, 100vw" alt="Sala de reuniones" loading="lazy">
-          <div><p>Reuniones</p><h3>Calls que importan.</h3></div>
+        <article class="amenity reveal" style="--d:180ms">
+          <img src="img/gym-lg.webp" srcset="img/gym-sm.webp 800w, img/gym-lg.webp 1152w" sizes="(min-width: 1024px) 25vw, 50vw" alt="Gimnasio con vista al mar" loading="lazy">
+          <div><p>Gym y fitness</p><h3>Entrená con vista al mar.</h3></div>
+        </article>
+        <article class="amenity reveal">
+          <img src="img/surf-walk-lg.webp" srcset="img/surf-walk-sm.webp 800w, img/surf-walk-lg.webp 1024w" sizes="(min-width: 1024px) 25vw, 50vw" alt="Dos surfistas caminando hacia el mar al amanecer" loading="lazy">
+          <div><p>Surf</p><h3>El mar antes de la primera call.</h3></div>
+        </article>
+        <article class="amenity reveal" style="--d:60ms">
+          <img src="img/running-lg.webp" srcset="img/running-sm.webp 800w, img/running-lg.webp 1024w" sizes="(min-width: 1024px) 25vw, 50vw" alt="Corredores en un sendero junto a los acantilados" loading="lazy">
+          <div><p>Running</p><h3>Senderos entre el bosque y la playa.</h3></div>
+        </article>
+        <article class="amenity reveal" style="--d:120ms">
+          <img src="img/pool-lg.webp" srcset="img/pool-sm.webp 800w, img/pool-lg.webp 1200w" sizes="(min-width: 1024px) 25vw, 50vw" alt="Piscina rodeada de árboles" loading="lazy">
+          <div><p>Pileta</p><h3>Cortá el día.</h3></div>
+        </article>
+        <article class="amenity reveal" style="--d:180ms">
+          <img src="img/food-lg.webp" srcset="img/food-sm.webp 800w, img/food-lg.webp 1152w" sizes="(min-width: 1024px) 25vw, 50vw" alt="Estación de comida saludable" loading="lazy">
+          <div><p>Estación saludable</p><h3>Comida viva, todo el día.</h3></div>
         </article>
       </div>
     </div>
   </section>
 
+  <!-- ============ HABITACIÓN ============ -->
   <section id="habitacion" class="section tight-top">
     <div class="wrap room">
       <div class="reveal">
         <p class="eyebrow">Habitación</p>
         <h2 class="display">Dormir bien.<br><em class="muted">Trabajar mejor.</em></h2>
-        <p class="lead">Lino, madera y luz. Escritorio propio y silla ergonómica en cada cuarto.</p>
+        <p class="lead">Lino, madera y luz. Escritorio propio y silla ergonómica en cada cuarto, para cuando preferís trabajar a solas.</p>
       </div>
       <div class="room-photo reveal" style="--d:120ms">
         <img src="img/room-1-lg.webp" srcset="img/room-1-sm.webp 800w, img/room-1-lg.webp 848w" sizes="(min-width: 1024px) 40vw, 100vw" alt="Habitación con cama de lino, escritorio de roble y silla ergonómica" loading="lazy">
@@ -127,33 +188,199 @@
     </div>
   </section>
 
-  <section id="equipos" class="teams">
-    <img src="img/team-lg.webp" srcset="img/team-sm.webp 800w, img/team-lg.webp 1600w" sizes="100vw" alt="Equipo trabajando en una mesa frente al mar en Chapadmalal" loading="lazy">
+  <!-- ============ EMPRESAS ============ -->
+  <section id="empresas" class="teams">
+    <img src="img/team-lg.webp" srcset="img/team-sm.webp 800w, img/team-lg.webp 1600w" sizes="100vw" alt="Equipo trabajando en una mesa frente al mar" loading="lazy">
     <div class="teams-shade"></div>
     <div class="wrap teams-inner">
       <div class="reveal">
-        <p class="eyebrow on-dark">Equipos</p>
-        <h2 class="display">Traé a tu equipo.<br><em>El mar hace el resto.</em></h2>
-        <p class="lead">Desafío Costa Reset: vení unos días con tu equipo. Si la productividad no sube, te devolvemos el dinero. Sí, el 100%.</p>
-        <a class="link-cta" target="_blank" rel="noopener" href="https://wa.me/5491132524245?text=Hola%21%20Quiero%20info%20sobre%20las%20promociones%20para%20empresas%2Fequipos%20en%20Costa%20Reset%20Club.">Hablar por WhatsApp →</a>
+        <p class="eyebrow on-dark">Para empresas</p>
+        <h2 class="display">El beneficio que tu equipo<br><em>sí va a usar.</em></h2>
+        <p class="lead">Días de trabajo en la costa como razón para sumarse y para quedarse. Vos definís el presupuesto; cada persona elige sus fechas.</p>
       </div>
     </div>
   </section>
 
-  <section id="oferta" class="offer">
+  <section class="section company">
+    <div class="wrap">
+      <div class="programs">
+        <article class="reveal">
+          <p class="eyebrow">Beneficio</p>
+          <h3>Workation para tu gente</h3>
+          <p>Comprás un paquete de noches y cada persona lo usa cuando le conviene, trabajando como siempre. Un beneficio que se diferencia del home office.</p>
+        </article>
+        <article class="reveal" style="--d:100ms">
+          <p class="eyebrow">Offsites</p>
+          <h3>Retiros y planificación</h3>
+          <p>De 2 a 5 días para alinear, planificar y reencontrarse. Salas, espacios para todo el equipo, comidas y actividades en un solo lugar.</p>
+        </article>
+        <article class="reveal" style="--d:200ms">
+          <p class="eyebrow">Eventos</p>
+          <h3>Workshops y lanzamientos</h3>
+          <p>Hackathons, demo days o jornadas con clientes y partners. Nos ocupamos de la logística; ustedes, del contenido.</p>
+        </article>
+      </div>
+
+      <div class="company-grid">
+        <div class="reveal">
+          <h3 class="subhead">Por qué suma para tu empresa</h3>
+          <ul class="checks">
+            <li><b>Atraer talento</b> con un beneficio que se cuenta solo en una entrevista.</li>
+            <li><b>Retener</b> con experiencias, no solo con sueldo.</li>
+            <li><b>Reunir equipos distribuidos</b> que casi no se ven en persona.</li>
+            <li><b>Cero organización interna:</b> alojamiento, espacios, comida y actividades, resueltos.</li>
+          </ul>
+          <p class="guarantee"><b>Primer offsite con garantía.</b> Antes de venir acordamos objetivos concretos. Si no se cumplen por nuestra parte, te devolvemos el 100%.</p>
+        </div>
+
+        <form id="companyForm" class="form reveal" style="--d:120ms" novalidate>
+          <h3 class="form-title">Pedí una propuesta para tu empresa</h3>
+          <div class="field">
+            <label for="c-name">Tu nombre</label>
+            <input id="c-name" name="name" autocomplete="name" maxlength="80" required>
+          </div>
+          <div class="field">
+            <label for="c-company">Empresa</label>
+            <input id="c-company" name="company" autocomplete="organization" maxlength="80" required>
+          </div>
+          <div class="field">
+            <label for="c-email">Email laboral</label>
+            <input id="c-email" name="email" type="email" autocomplete="email" maxlength="120" required>
+          </div>
+          <div class="field two">
+            <div>
+              <label for="c-size">Personas</label>
+              <select id="c-size" name="size" required>
+                <option value="">Elegí</option>
+                <option>1 a 10</option>
+                <option>11 a 50</option>
+                <option>51 a 200</option>
+                <option>Más de 200</option>
+              </select>
+            </div>
+            <div>
+              <label for="c-interest">Les interesa</label>
+              <select id="c-interest" name="interest" required>
+                <option value="">Elegí</option>
+                <option>Beneficio de workation</option>
+                <option>Offsite de equipo</option>
+                <option>Evento o workshop</option>
+                <option>Todavía no sé</option>
+              </select>
+            </div>
+          </div>
+          <div class="hp" aria-hidden="true"><label>No completar <input name="website" tabindex="-1" autocomplete="off"></label></div>
+          <p class="error" role="alert"></p>
+          <button type="submit" class="btn">Pedir propuesta →</button>
+          <p class="hint center">Te respondemos por email en menos de 48 h hábiles.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COMUNIDAD ============ -->
+  <section id="comunidad" class="section community">
+    <div class="wrap community-grid">
+      <div class="community-photo reveal">
+        <img src="img/community-lg.webp" srcset="img/community-sm.webp 800w, img/community-lg.webp 1536w" sizes="(min-width: 1024px) 45vw, 100vw" alt="Personas conversando en una mesa al aire libre frente al mar" loading="lazy">
+      </div>
+      <div class="reveal" style="--d:120ms">
+        <p class="eyebrow">Comunidad</p>
+        <h2 class="display">Donde el ecosistema<br><em class="muted">se encuentra.</em></h2>
+        <p class="lead">Cada semana en la costa puede sumar algo más que descanso: gente con quien pensar, aprender y hacer negocios.</p>
+        <ul class="community-list">
+          <li><h3>Semanas por industria</h3><p>Fintech, IA aplicada, agro y food tech, e-commerce: semanas para quienes trabajan en lo mismo.</p></li>
+          <li><h3>Founders y fondos</h3><p>Charlas, office hours y cenas con inversores y founders que ya pasaron por lo que estás viviendo.</p></li>
+          <li><h3>Workshops prácticos</h3><p>Producto, ventas, liderazgo remoto. Contenido dictado por gente que lo hace todos los días.</p></li>
+        </ul>
+        <p class="note">Estamos armando el calendario de la primera temporada. ¿Tenés una comunidad, un fondo o una empresa y querés organizar una semana?
+          <a target="_blank" rel="noopener" href="https://wa.me/5491132524245?text=Hola%21%20Quiero%20organizar%20una%20semana%20o%20evento%20en%20Costa%20Reset%20Club.">Escribinos →</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRECIOS ============ -->
+  <section id="precios" class="offer">
     <img src="img/house-dusk-lg.webp" srcset="img/house-dusk-sm.webp 800w, img/house-dusk-lg.webp 1200w" sizes="100vw" alt="" loading="lazy">
     <div class="offer-shade"></div>
     <div class="wrap offer-inner">
-      <p class="eyebrow on-dark reveal">Una sola decisión</p>
-      <h2 class="display xl reveal" style="--d:100ms">Todo incluido.<em>Vos solo venís.</em></h2>
-      <p class="price reveal" style="--d:200ms"><small>Desde</small> <strong>USD 40</strong> <span>/ noche</span></p>
-      <div class="reveal" style="--d:300ms">
-        <a href="#reservar" class="link-cta">Reservar mi lugar →</a>
-        <p class="fine">Sin pago ahora. Confirmamos en menos de 24 horas.</p>
+      <p class="eyebrow on-dark reveal">Precios</p>
+      <h2 class="display reveal" style="--d:100ms">Una sola decisión.<em>Lo demás, resuelto.</em></h2>
+      <div class="plans">
+        <article class="plan reveal" style="--d:200ms">
+          <p class="plan-for">Profesionales</p>
+          <p class="price"><small>Desde</small> <strong>USD 40</strong> <span>/ noche</span></p>
+          <ul>
+            <li>Habitación con escritorio y silla ergonómica</li>
+            <li>Cowork, salas y boxes para videollamadas</li>
+            <li>Gimnasio y pileta</li>
+            <li>Desayuno en la estación saludable</li>
+          </ul>
+          <p class="plan-extra">Clases de surf, fitness y comidas: se suman aparte.</p>
+          <a href="#reservar" class="btn-light">Reservar mi lugar</a>
+        </article>
+        <article class="plan reveal" style="--d:300ms">
+          <p class="plan-for">Empresas</p>
+          <p class="price"><strong>A medida</strong></p>
+          <ul>
+            <li>Paquetes de noches para tu equipo</li>
+            <li>Offsites con salas y comidas incluidas</li>
+            <li>Eventos para tu comunidad o clientes</li>
+            <li>Un solo contacto para toda la organización</li>
+          </ul>
+          <p class="plan-extra">Armamos la propuesta según tu equipo y tus fechas.</p>
+          <a href="#empresas" class="btn-outline">Pedir propuesta</a>
+        </article>
+      </div>
+      <p class="fine reveal">Pre-reserva sin pago. Te confirmamos disponibilidad y precio final por WhatsApp en menos de 24 horas.</p>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section id="preguntas" class="section faq-section">
+    <div class="wrap faq-grid">
+      <div class="reveal">
+        <p class="eyebrow">Preguntas frecuentes</p>
+        <h2 class="display">Antes de venir.</h2>
+      </div>
+      <div class="faq reveal" style="--d:120ms">
+        <details>
+          <summary>¿Es para trabajar o para vacacionar?</summary>
+          <p>Para trabajar. Cumplís tu jornada como siempre, pero con mejores condiciones y con el mar, el deporte y la buena comida al alcance entre una cosa y otra.</p>
+        </details>
+        <details>
+          <summary>¿Qué tan buena es la conexión?</summary>
+          <p>Es la prioridad número uno: internet pensada para videollamadas todo el día, con conexión de respaldo. Al confirmar tu reserva te pasamos los detalles técnicos.</p>
+        </details>
+        <details>
+          <summary>¿Tengo que pagar ahora?</summary>
+          <p>No. Enviás tu pre-reserva sin pagar, te confirmamos disponibilidad y precio final por WhatsApp, y recién ahí se abona una seña para asegurar tus fechas.</p>
+        </details>
+        <details>
+          <summary>¿Puedo ir solo o sola?</summary>
+          <p>Sí. Muchas personas llegan solas: las comidas compartidas y las actividades hacen fácil conocer gente, y si preferís tu espacio, lo tenés.</p>
+        </details>
+        <details>
+          <summary>¿Cuánto tiempo puedo quedarme?</summary>
+          <p>Lo que necesites: desde unas pocas noches hasta varias semanas. Contanos tus fechas y armamos la estadía.</p>
+        </details>
+        <details>
+          <summary>Mi empresa quiere ofrecerlo como beneficio, ¿cómo funciona?</summary>
+          <p>La empresa contrata un paquete de noches o un offsite, y nosotros coordinamos las fechas directamente con cada persona. <a href="#empresas">Pedí una propuesta</a>.</p>
+        </details>
+        <details>
+          <summary>¿Cómo llego?</summary>
+          <p>Chapadmalal está sobre la costa, al sur de Mar del Plata. Se llega en auto, o en micro o avión hasta Mar del Plata y desde ahí un tramo corto por la costa.</p>
+        </details>
+        <details>
+          <summary>¿Cuándo abre?</summary>
+          <p>Estamos armando la primera temporada. Las pre-reservas tienen prioridad para elegir fechas.</p>
+        </details>
       </div>
     </div>
   </section>
 
+  <!-- ============ RESERVAR ============ -->
   <section id="reservar" class="reserve">
     <div class="reserve-banner">
       <img src="img/house-dusk-lg.webp" srcset="img/house-dusk-sm.webp 800w, img/house-dusk-lg.webp 1200w" sizes="100vw" alt="Casa frente al mar al atardecer" loading="lazy">
@@ -166,7 +393,7 @@
     <div class="wrap reserve-grid">
       <div>
         <div class="reserve-photo"><img src="img/room-lg.webp" srcset="img/room-sm.webp 800w, img/room-lg.webp 1024w" sizes="(min-width: 1024px) 45vw, 100vw" alt="Habitación de Costa Reset Club" loading="lazy"></div>
-        <p class="muted reserve-note">Tres datos. Nada más. Te confirmamos por WhatsApp en menos de 24 hs.</p>
+        <p class="muted reserve-note">Cuatro datos. Nada más. Te confirmamos por WhatsApp en menos de 24 h.</p>
       </div>
       <form id="reserveForm" class="form" novalidate>
         <div class="field">
@@ -189,11 +416,19 @@
           </div>
           <p id="nights" class="hint" aria-live="polite"></p>
         </fieldset>
-        <label class="check"><input type="checkbox" name="team" id="team"> Vengo con mi equipo</label>
+        <div class="field">
+          <label for="mode">¿Cómo venís?</label>
+          <select id="mode" name="mode" required>
+            <option value="">Elegí una opción</option>
+            <option>Por mi cuenta</option>
+            <option>Me lo ofrece mi empresa</option>
+            <option>Con mi equipo</option>
+          </select>
+        </div>
         <div class="hp" aria-hidden="true"><label>No completar <input name="website" tabindex="-1" autocomplete="off"></label></div>
-        <p id="formError" class="error" role="alert"></p>
+        <p class="error" role="alert"></p>
         <button type="submit" class="btn">Reservar mi lugar →</button>
-        <p class="hint center">Sin pago ahora. Curamos cada reserva para que el lugar siga siendo lo que es.</p>
+        <p class="hint center">Pre-reserva sin pago. Curamos cada reserva para que el lugar siga siendo lo que es.</p>
       </form>
     </div>
   </section>
@@ -203,7 +438,7 @@
   <div class="wrap footer-grid">
     <div>
       <div class="brand big">Costa Reset <span>Club</span></div>
-      <p class="muted-dark">Un refugio frente al mar. Chapadmalal, Argentina.</p>
+      <p class="muted-dark">Coliving y cowork frente al mar. Costa Atlántica, Argentina.</p>
     </div>
     <div class="muted-dark">
       <p class="footer-title">Contacto</p>
@@ -218,7 +453,7 @@
     </div>
   </div>
   <div class="wrap footer-base">
-    <p>© <span id="year">2026</span> Costa Reset Club. Todos los derechos reservados.</p>
+    <p>© <span id="year">2026</span> Costa Reset Club. Imágenes ilustrativas.</p>
     <p>Hecho con sal y café en Buenos Aires.</p>
   </div>
 </footer>
