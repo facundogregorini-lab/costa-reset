@@ -46,16 +46,18 @@ document.querySelectorAll('.bars li').forEach(li => {
 });
 
 // Calculadora
-const PEOPLE_MARKET = 650000, COMPANY_MARKET = 2450, NIGHTS_PER_COMPANY = 20 * 4;
+const PEOPLE_MARKET = 650000, COMPANY_MARKET = 2450, NIGHTS_PER_COMPANY = 20 * 4, NIGHTS_PER_WEEK = 20 * 5;
 const fmt = n => Math.round(n).toLocaleString('es-AR');
 const pct = n => (n < 0.1 ? n.toLocaleString('es-AR', { maximumFractionDigits: 2 }) : n < 10 ? n.toLocaleString('es-AR', { maximumFractionDigits: 1 }) : Math.round(n).toLocaleString('es-AR')) + '%';
 const val = id => Number($(id).value);
 function calc() {
-  const rooms = val('rooms'), occ = val('occ') / 100, stay = val('stay'), visits = val('visits'), corp = val('corp') / 100, sites = val('sites');
+  const rooms = val('rooms'), occ = val('occ') / 100, stay = val('stay'), visits = val('visits'), corp = val('corp') / 100, sites = val('sites'), weeks = val('weeks');
   $('o-rooms').textContent = rooms; $('o-occ').textContent = Math.round(occ * 100) + '%'; $('o-stay').textContent = stay;
-  $('o-visits').textContent = visits.toLocaleString('es-AR'); $('o-corp').textContent = Math.round(corp * 100) + '%'; $('o-sites').textContent = sites;
+  $('o-visits').textContent = visits.toLocaleString('es-AR'); $('o-corp').textContent = Math.round(corp * 100) + '%'; $('o-sites').textContent = sites; $('o-weeks').textContent = weeks;
   const nights = rooms * 365 * occ * sites;
-  const people = nights * (1 - corp) / stay / visits;
+  // Themed weeks come out of the nights not sold to companies; individuals fill the rest.
+  const themed = Math.min(weeks * NIGHTS_PER_WEEK * sites, nights * (1 - corp));
+  const people = (nights * (1 - corp) - themed) / stay / visits;
   const companies = nights * corp / NIGHTS_PER_COMPANY;
   const share = people / PEOPLE_MARKET * 100, cshare = companies / COMPANY_MARKET * 100;
   $('r-nights').textContent = fmt(nights);
@@ -65,6 +67,9 @@ function calc() {
   $('r-companies').textContent = fmt(Math.ceil(companies));
   $('r-cshare').textContent = pct(cshare);
   $('r-cshare-bar').style.width = Math.min(100, cshare) + '%';
+  $('r-themed').textContent = fmt(themed) + ' noches';
+  $('r-tshare').textContent = pct(nights ? themed / nights * 100 : 0);
+  $('r-partners').textContent = weeks * sites === 1 ? '1 semana' : fmt(weeks * sites) + ' semanas';
 }
 $('calc').addEventListener('input', calc);
 calc();

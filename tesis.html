@@ -174,8 +174,28 @@ src="https://www.facebook.com/tr?id=1671294247882059&ev=PageView&noscript=1"
             <li data-value="3547" data-kind="dato" data-source="Empresas con más de 200 empleados · [4]"><span class="bar-label">Grandes empresas (más de 200 empleados)</span><span class="bar-value">3.547</span></li>
             <li data-value="2450" data-kind="estimación" data-source="3.547 × 69% con modelo híbrido (PwC) · [5]" class="is-target"><span class="bar-label">Grandes empresas con esquema híbrido</span><span class="bar-value">≈ 2.450</span></li>
           </ol>
-          <p class="funnel-note">Escala logarítmica: la diferencia entre el primer paso y los siguientes es enorme. Sin contar empresas medianas (51 a 200 empleados), startups ni equipos 100% remotos, que amplían mucho la base.</p>
+          <p class="funnel-note">Escala logarítmica: la diferencia entre el primer paso y los siguientes es enorme. Sin contar empresas medianas (51 a 200 empleados) ni equipos 100% remotos, que amplían mucho la base. Las startups van aparte, abajo.</p>
         </figure>
+      </div>
+
+      <div class="startups">
+        <div class="startups-head reveal">
+          <p class="tag">Startups y ecosistema</p>
+          <h3>Chico en cantidad.<br><em>Enorme en influencia.</em></h3>
+          <p>El ecosistema emprendedor no llena una sede por volumen, y no hace falta. Aporta lo que ningún otro segmento aporta: energía, conversación, contenido y una red que recomienda. Es el corazón de la comunidad y la puerta de entrada a las empresas y fondos que vienen detrás.</p>
+        </div>
+        <div class="mini-stats reveal" style="--d:100ms">
+          <div><b>≈ 285 mil</b><span>empleos formales en la economía del conocimiento: 80% universitarios, salarios por encima del promedio y cultura de trabajo remoto <a href="#f8">[8]</a></span></div>
+          <div><b>≈ 1.000</b><span>startups activas en el país, en el puesto 46 del ranking mundial <a href="#f9">[9]</a></span></div>
+          <div><b>91</b><span>fondos e inversores en la cámara de capital emprendedor, con 1.384 empresas en sus portafolios <a href="#f10">[10]</a></span></div>
+          <div><b>73 rondas</b><span>de inversión en 2025, más de la mitad en etapa pre-seed: un ecosistema que se renueva <a href="#f10">[10]</a></span></div>
+        </div>
+        <ol class="roles reveal" style="--d:180ms">
+          <li><b>Comunidad y clima.</b> Founders y equipos jóvenes le dan al lugar la frescura y las conversaciones que lo vuelven memorable.</li>
+          <li><b>Primeros en adoptar.</b> Trabajan remoto por defecto, se mueven rápido y hacen offsites para alinear equipos distribuidos.</li>
+          <li><b>Canal hacia empresas.</b> Un solo acuerdo con un fondo o una aceleradora abre la puerta a decenas de empresas de su portafolio.</li>
+          <li><b>Semanas temáticas.</b> Fintech, IA, agro y biotech: ingresos por evento, contenido para redes y una razón para volver.</li>
+        </ol>
       </div>
     </div>
   </section>
@@ -194,6 +214,7 @@ src="https://www.facebook.com/tr?id=1671294247882059&ev=PageView&noscript=1"
           <label>Noches por estadía <output id="o-stay"></output><input type="range" id="stay" min="2" max="14" step="1" value="5"></label>
           <label>Visitas por persona al año <output id="o-visits"></output><input type="range" id="visits" min="1" max="4" step="0.5" value="1.5"></label>
           <label>Noches vendidas a empresas <output id="o-corp"></output><input type="range" id="corp" min="0" max="80" step="5" value="40"></label>
+          <label>Semanas temáticas al año, por sede <output id="o-weeks"></output><input type="range" id="weeks" min="0" max="24" step="1" value="6"></label>
           <label>Sedes <output id="o-sites"></output><input type="range" id="sites" min="1" max="15" step="1" value="1"></label>
         </form>
         <div class="calc-results" aria-live="polite">
@@ -213,7 +234,12 @@ src="https://www.facebook.com/tr?id=1671294247882059&ev=PageView&noscript=1"
             <p class="result-share"><b id="r-cshare"></b> de las grandes empresas híbridas (≈ 2.450)</p>
             <div class="share-bar" aria-hidden="true"><span id="r-cshare-bar"></span></div>
           </div>
-          <p class="calc-note">Cada empresa cliente: 20 personas × 4 noches al año. Una habitación por persona. Cálculos propios con los supuestos de la izquierda.</p>
+          <div class="result">
+            <p class="result-label">Semanas temáticas con startups e industria</p>
+            <p class="result-value" id="r-themed"></p>
+            <p class="result-share"><b id="r-tshare"></b> de las noches de la sede, con <span id="r-partners"></span> organizadas junto a un ecosistema de ≈ 1.000 startups y 91 fondos</p>
+          </div>
+          <p class="calc-note">Cada empresa cliente: 20 personas × 4 noches al año. Cada semana temática: 20 personas × 5 noches, dentro de las noches que no se venden a empresas. Una habitación por persona. Cálculos propios con los supuestos de la izquierda.</p>
         </div>
       </div>
     </div>
@@ -268,6 +294,9 @@ src="https://www.facebook.com/tr?id=1671294247882059&ev=PageView&noscript=1"
         <li id="f5">PwC Argentina (2025): en el 69% de 163 empresas consultadas predomina el modelo híbrido; 24% presencial y 7% remoto. <a href="https://www.ambito.com/negocios/la-modalidad-hibrida-lidera-argentina-8-cada-10-empresas-optan-modelos-flexibles-n6129390" target="_blank" rel="noopener">Ámbito</a></li>
         <li id="f6">Bonda, HRTrends 2025: 77,9% de las compañías adoptó el trabajo híbrido. <a href="https://www.ambito.com/negocios/la-modalidad-hibrida-lidera-argentina-8-cada-10-empresas-optan-modelos-flexibles-n6129390" target="_blank" rel="noopener">Ámbito</a></li>
         <li id="f7">De Neve, Ward y Bellet (2019). Trabajadores más felices son un 13% más productivos. Saïd Business School, Universidad de Oxford, con BT. <a href="https://www.sbs.ox.ac.uk/news/happy-workers-13-more-productive-finds-oxford-said-research" target="_blank" rel="noopener">Universidad de Oxford</a></li>
+        <li id="f8">Argencon (2025). La economía del conocimiento superó los 285.000 puestos de trabajo formales (SIPA); cerca del 80% con formación universitaria. <a href="https://www.argencon.org/la-economia-del-conocimiento-consolida-su-rol-estrategico-con-exportaciones-record-en-2025/" target="_blank" rel="noopener">Argencon</a></li>
+        <li id="f9">StartupBlink, Startup Ecosystem Index: Argentina con 1.031 startups registradas, puesto 46 a nivel global. <a href="https://www.startupblink.com/startup-ecosystem/argentina" target="_blank" rel="noopener">StartupBlink</a></li>
+        <li id="f10">ARCAP y EY, Panorama del Capital Emprendedor Argentino 2026: 73 rondas por US$ 270 millones en 2025, 52% pre-seed; la cámara pasó de 17 a 91 miembros, con inversiones en 1.384 empresas. <a href="https://www.elobservador.com.uy/argentina/economia-y-negocios/se-reactiva-el-venture-capital-startups-argentinas-captaron-us-270-millones-2025-n6046981" target="_blank" rel="noopener">El Observador</a> · <a href="https://www.lariberaweb.com/radiografia-de-arcap-startups-argentinas-levantaron-usd-2-558-millones-en-cuatro-anos/" target="_blank" rel="noopener">La Ribera Web</a></li>
       </ol>
       <p class="hint">Las cifras de 2,2 millones y 2.450 empresas son estimaciones propias a partir de estas fuentes. Los pasos marcados como supuesto son hipótesis de trabajo del proyecto.</p>
     </div>
