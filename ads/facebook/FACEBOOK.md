@@ -1,6 +1,6 @@
 # Página de Facebook · Costa Reset Club
 
-> Reemplazá `TU-DOMINIO` por la dirección de la landing.
+> Landing: https://costa-reset.vercel.app
 
 ## 1. Imágenes de la página
 
@@ -18,7 +18,7 @@ La portada tiene el texto centrado para que no lo tape la foto de perfil y se ve
 - **Categoría:** Espacio de coworking. Como segunda categoría: Hotel y alojamiento.
 - **Presentación** (máximo 101 caracteres):
   > Coliving y cowork premium frente al mar en la Costa Atlántica. Para remotos y equipos. 🌊
-- **Sitio web:** `https://TU-DOMINIO/?utm_source=facebook&utm_medium=organic&utm_campaign=pagina`
+- **Sitio web:** `https://costa-reset.vercel.app/?utm_source=facebook&utm_medium=organic&utm_campaign=pagina`
 - **Email:** hola@costaresetclub.com
 - **WhatsApp:** +54 9 11 3252-4245 (conectalo en *Configuración → WhatsApp*)
 - **Ubicación:** Chapadmalal, Buenos Aires. Sin dirección exacta hasta tener el lugar confirmado.
@@ -68,7 +68,7 @@ Imagen: `post-3-empresas.jpg`
 >
 > Alojamiento, cowork, salas, comida y actividades, resueltos en un solo lugar. Para atraer talento y para que quiera quedarse.
 >
-> Si trabajás en RR. HH. o liderás un equipo, pedí una propuesta: TU-DOMINIO/#empresas
+> Si trabajás en RR. HH. o liderás un equipo, pedí una propuesta: costa-reset.vercel.app/#empresas
 >
 > #RecursosHumanos #EmployerBranding #Beneficios #TrabajoRemoto #Offsite
 
@@ -81,7 +81,7 @@ Imagen: `post-4-pre-reserva.jpg`
 >
 > Desde USD 40 por noche, con habitación con escritorio, cowork, gym, pileta y desayuno.
 >
-> 👉 TU-DOMINIO/#reservar
+> 👉 costa-reset.vercel.app/#reservar
 >
 > #CostaResetClub #Workation #TrabajoRemoto #Coliving
 

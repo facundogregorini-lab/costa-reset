@@ -30,7 +30,7 @@ Dos públicos con su propio camino: **profesionales remotos** (pre-reserva con f
 
 Sin la base, el formulario sigue funcionando por WhatsApp; solo no se guarda la copia.
 
-Cuando tengas el dominio definitivo, cambiá `og:image` en `index.html` por la URL completa (`https://tu-dominio/img/og.jpg`) para que la vista previa se vea en WhatsApp y redes.
+La landing está en https://costa-reset.vercel.app. Si cambiás de dominio, actualizá `og:image`, `og:url` y `canonical` en `index.html`.
 
 ## Desarrollo
 

@@ -2,7 +2,7 @@
 
 **Qué queremos saber:** si hay gente dispuesta a reservar fechas (profesionales remotos) y empresas interesadas en pedir una propuesta. Cada anuncio lleva a la landing con su UTM, así en `/admin.html` se ve qué campaña trae pedidos.
 
-> Reemplazá `TU-DOMINIO` por la dirección de la landing en todos los enlaces.
+> Landing: https://costa-reset.vercel.app
 
 ## 1. Antes de publicar
 
@@ -51,7 +51,7 @@ Piezas: `A-lugar-feed.jpg`, `A-lugar-story.jpg`
 **Título:** Tu semana de trabajo, frente al mar
 **Descripción:** Pre-reserva sin pago
 **Botón:** Más información
-**Enlace:** `https://TU-DOMINIO/?utm_source=meta&utm_medium=paid&utm_campaign=remotos&utm_content=a-lugar`
+**Enlace:** `https://costa-reset.vercel.app/?utm_source=meta&utm_medium=paid&utm_campaign=remotos&utm_content=a-lugar`
 
 ### Anuncio B · Un día
 Piezas: `B-dia-feed.jpg`, `B-dia-story.jpg`
@@ -64,7 +64,7 @@ Piezas: `B-dia-feed.jpg`, `B-dia-story.jpg`
 **Título:** Trabajá con foco. Viví con otra energía.
 **Descripción:** Desde USD 40 por noche
 **Botón:** Reservar
-**Enlace:** `https://TU-DOMINIO/?utm_source=meta&utm_medium=paid&utm_campaign=remotos&utm_content=b-dia`
+**Enlace:** `https://costa-reset.vercel.app/?utm_source=meta&utm_medium=paid&utm_campaign=remotos&utm_content=b-dia`
 
 ### Anuncio C · El beneficio
 Piezas: `C-beneficio-feed.jpg`, `C-beneficio-story.jpg`
@@ -77,7 +77,7 @@ Piezas: `C-beneficio-feed.jpg`, `C-beneficio-story.jpg`
 **Título:** Trabajo remoto, desde la costa
 **Descripción:** Planes para personas y empresas
 **Botón:** Más información
-**Enlace:** `https://TU-DOMINIO/?utm_source=meta&utm_medium=paid&utm_campaign=remotos&utm_content=c-beneficio`
+**Enlace:** `https://costa-reset.vercel.app/?utm_source=meta&utm_medium=paid&utm_campaign=remotos&utm_content=c-beneficio`
 
 ### Anuncio R · Reel "Un día" (video)
 Pieza: `reel-un-dia.mp4` (9:16, 16 segundos, con sonido de mar). Subilo como anuncio aparte dentro del mismo conjunto de "Remotos".
@@ -89,7 +89,7 @@ Pieza: `reel-un-dia.mp4` (9:16, 16 segundos, con sonido de mar). Subilo como anu
 
 **Título:** Tu semana de trabajo, frente al mar
 **Botón:** Más información
-**Enlace:** `https://TU-DOMINIO/?utm_source=meta&utm_medium=paid&utm_campaign=remotos&utm_content=r-reel`
+**Enlace:** `https://costa-reset.vercel.app/?utm_source=meta&utm_medium=paid&utm_campaign=remotos&utm_content=r-reel`
 
 Consejos: en *Ubicaciones* dejá las automáticas (el video se adapta a Reels, Stories y feed). Si Meta ofrece agregar música de su biblioteca, podés reemplazar el sonido de mar. El primer cuadro ya tiene el gancho, así que sirve como portada.
 
@@ -103,7 +103,7 @@ Pieza: `E-comunidad-feed.jpg`. Público: intereses en startups, emprendimiento, 
 
 **Título:** Founders, fondos e industria. Frente al mar.
 **Botón:** Más información
-**Enlace:** `https://TU-DOMINIO/?utm_source=meta&utm_medium=paid&utm_campaign=comunidad&utm_content=e-comunidad#comunidad`
+**Enlace:** `https://costa-reset.vercel.app/?utm_source=meta&utm_medium=paid&utm_campaign=comunidad&utm_content=e-comunidad#comunidad`
 
 ## 5. LinkedIn · Campaña "Empresas"
 
@@ -124,13 +124,13 @@ Piezas: `D-empresas-cuadrado.jpg` (1:1) y `D-empresas-horizontal.jpg` (1,91:1).
 
 **Título:** El beneficio que tu equipo sí va a usar
 **Botón:** Solicitar presupuesto
-**Enlace:** `https://TU-DOMINIO/?utm_source=linkedin&utm_medium=paid&utm_campaign=empresas&utm_content=d-beneficio#empresas`
+**Enlace:** `https://costa-reset.vercel.app/?utm_source=linkedin&utm_medium=paid&utm_campaign=empresas&utm_content=d-beneficio#empresas`
 
 ## 6. Google Ads · Búsqueda (opcional)
 
 - **Palabras clave** (concordancia de frase): "coworking frente al mar", "coliving argentina", "workation argentina", "coworking mar del plata", "coworking chapadmalal", "offsite empresas", "retiro de equipo empresa", "lugar para offsite".
 - **Palabras negativas:** gratis, trabajo, empleo, alquiler anual, venta.
-- **Enlace:** `https://TU-DOMINIO/?utm_source=google&utm_medium=cpc&utm_campaign=busqueda`
+- **Enlace:** `https://costa-reset.vercel.app/?utm_source=google&utm_medium=cpc&utm_campaign=busqueda`
 
 **Títulos** (máximo 30 caracteres):
 Cowork frente al mar · Coliving en la costa · Trabajá desde Chapadmalal · Tu semana de trabajo al mar · Surf, gym y foco · Pre-reservá sin pagar · Desde USD 40 por noche · Boxes para videollamadas · Offsites para equipos · Workation para tu empresa · Costa Reset Club · Salas de reunión y cowork · Beneficio para tu equipo · Coliving para remotos · Cerca de Mar del Plata
