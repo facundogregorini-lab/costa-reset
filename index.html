@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="img/hero-desk-lg.webp" imagesrcset="img/hero-desk-sm.webp 800w, img/hero-desk-lg.webp 1152w" imagesizes="100vw" fetchpriority="high">
+<link rel="preload" as="image" href="img/hero-beach-lg.webp" imagesrcset="img/hero-beach-sm.webp 800w, img/hero-beach-lg.webp 1536w" imagesizes="100vw" fetchpriority="high">
 <link rel="stylesheet" href="styles.css">
 <script>document.documentElement.classList.add('js')</script>
 <!-- Píxeles de anuncios (Meta / Google): pegalos acá. main.js ya envía el evento "Lead" en cada formulario. -->
@@ -60,11 +60,11 @@
   <!-- ============ HERO ============ -->
   <section id="top" class="hero" aria-label="Costa Reset Club">
     <div class="hero-slides" aria-hidden="true">
-      <img class="is-active" src="img/hero-desk-lg.webp" srcset="img/hero-desk-sm.webp 800w, img/hero-desk-lg.webp 1152w" sizes="100vw" alt="" fetchpriority="high">
+      <img class="is-active" src="img/hero-beach-lg.webp" srcset="img/hero-beach-sm.webp 800w, img/hero-beach-lg.webp 1536w" sizes="100vw" alt="" fetchpriority="high">
+      <img src="img/living-lg.webp" srcset="img/living-sm.webp 800w, img/living-lg.webp 1536w" sizes="100vw" alt="" loading="lazy">
       <img src="img/hero-cowork-lg.webp" srcset="img/hero-cowork-sm.webp 800w, img/hero-cowork-lg.webp 1376w" sizes="100vw" alt="" loading="lazy">
       <img src="img/surf-walk-lg.webp" srcset="img/surf-walk-sm.webp 800w, img/surf-walk-lg.webp 1024w" sizes="100vw" alt="" loading="lazy">
       <img src="img/pool-lg.webp" srcset="img/pool-sm.webp 800w, img/pool-lg.webp 1200w" sizes="100vw" alt="" loading="lazy">
-      <img src="img/coast-aerial-lg.webp" srcset="img/coast-aerial-sm.webp 800w, img/coast-aerial-lg.webp 1536w" sizes="100vw" alt="" loading="lazy">
     </div>
     <div class="hero-shade"></div>
     <div class="wrap hero-inner">
@@ -139,7 +139,7 @@
       </div>
       <div class="amenities">
         <article class="amenity reveal">
-          <img src="img/hero-cowork-lg.webp" srcset="img/hero-cowork-sm.webp 800w, img/hero-cowork-lg.webp 1376w" sizes="(min-width: 1024px) 25vw, 50vw" alt="Cowork con vista al océano" loading="lazy">
+          <img src="img/hero-beach-lg.webp" srcset="img/hero-beach-sm.webp 800w, img/hero-beach-lg.webp 1536w" sizes="(min-width: 1024px) 25vw, 50vw" alt="Escritorio del cowork frente a un ventanal con vista a los acantilados y el mar" loading="lazy">
           <div><p>Cowork</p><h3>Escritorios con vista al mar.</h3></div>
         </article>
         <article class="amenity reveal" style="--d:60ms">
@@ -176,14 +176,31 @@
 
   <!-- ============ HABITACIÓN ============ -->
   <section id="habitacion" class="section tight-top">
-    <div class="wrap room">
-      <div class="reveal">
-        <p class="eyebrow">Habitación</p>
-        <h2 class="display">Dormir bien.<br><em class="muted">Trabajar mejor.</em></h2>
+    <div class="wrap">
+      <div class="room-head reveal">
+        <div>
+          <p class="eyebrow">Habitaciones</p>
+          <h2 class="display">Dormir bien.<br><em class="muted">Trabajar mejor.</em></h2>
+        </div>
         <p class="lead">Lino, madera y luz. Escritorio propio y silla ergonómica en cada cuarto, para cuando preferís trabajar a solas.</p>
       </div>
-      <div class="room-photo reveal" style="--d:120ms">
-        <img src="img/room-1-lg.webp" srcset="img/room-1-sm.webp 800w, img/room-1-lg.webp 848w" sizes="(min-width: 1024px) 40vw, 100vw" alt="Habitación con cama de lino, escritorio de roble y silla ergonómica" loading="lazy">
+      <div class="room-gallery">
+        <figure class="reveal">
+          <img src="img/room-2-lg.webp" srcset="img/room-2-sm.webp 800w, img/room-2-lg.webp 1024w" sizes="(min-width: 900px) 50vw, 100vw" alt="Habitación con cama blanca y ventanal con vista al mar" loading="lazy">
+          <figcaption>Vista al mar</figcaption>
+        </figure>
+        <figure class="reveal" style="--d:80ms">
+          <img src="img/hero-desk-lg.webp" srcset="img/hero-desk-sm.webp 800w, img/hero-desk-lg.webp 1152w" sizes="(min-width: 900px) 25vw, 50vw" alt="Escritorio con monitor y silla ergonómica dentro de una habitación" loading="lazy">
+          <figcaption>Escritorio propio</figcaption>
+        </figure>
+        <figure class="reveal" style="--d:160ms">
+          <img src="img/room-1-lg.webp" alt="Habitación con cama de lino y escritorio de roble con lámpara" loading="lazy">
+          <figcaption>Lino y luz natural</figcaption>
+        </figure>
+        <figure class="reveal" style="--d:240ms">
+          <img src="img/room-lg.webp" srcset="img/room-sm.webp 800w, img/room-lg.webp 1024w" sizes="(min-width: 900px) 50vw, 100vw" alt="Rincón de la habitación con silla de madera y cortinas de lino" loading="lazy">
+          <figcaption>Mañanas lentas</figcaption>
+        </figure>
       </div>
     </div>
   </section>

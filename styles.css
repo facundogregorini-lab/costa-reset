@@ -177,6 +177,22 @@ em { font-style: italic; }
 .btn:hover { opacity: .9; }
 .btn:disabled { opacity: .6; cursor: wait; }
 
+.room-head { display: grid; gap: 1.5rem; align-items: end; margin-bottom: 3rem; }
+@media (min-width: 900px) { .room-head { grid-template-columns: 1fr 1fr; gap: 4rem; } .room-head .lead { margin-top: 0; } }
+.room-gallery { display: grid; gap: .75rem; grid-template-columns: 1fr 1fr; }
+.room-gallery figure { position: relative; margin: 0; overflow: hidden; border-radius: 2px; aspect-ratio: 4 / 5; background: var(--ink); }
+.room-gallery figure:first-child, .room-gallery figure:last-child { grid-column: 1 / -1; aspect-ratio: 4 / 3; }
+@media (min-width: 900px) {
+  .room-gallery { grid-template-columns: 2fr 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 1rem; height: min(78vh, 760px); }
+  .room-gallery figure, .room-gallery figure:first-child, .room-gallery figure:last-child { aspect-ratio: auto; min-height: 0; }
+  .room-gallery figure:first-child { grid-column: 1; grid-row: 1 / 3; }
+  .room-gallery figure:last-child { grid-column: 2 / 4; }
+}
+.room-gallery img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.5s var(--ease); }
+.room-gallery figure:hover img { transform: scale(1.04); }
+.room-gallery figure:first-child img { object-position: 80% center; }
+.room-gallery figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 2.5rem 1rem .9rem; font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: var(--bg); background: linear-gradient(0deg, hsl(120 18% 9% / .7), transparent); }
+
 /* ---------- Buttons ---------- */
 .btn-light, .btn-outline {
   display: inline-block; text-decoration: none; font-weight: 500; font-size: .95rem;
