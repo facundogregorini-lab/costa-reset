@@ -19,6 +19,7 @@ const iso = offset => new Date(Date.now() + offset * 864e5 - new Date().getTimez
     const fbqCalls = () => page.evaluate(() => window.fbq.queue.map(args => [...args]));
     await page.goto(SITE + '/?utm_source=meta&utm_campaign=validacion-oct', { waitUntil: 'load' });
     check('Title and headline', (await page.title()).includes('Costa Reset Club') && (await page.textContent('h1')).includes('frente al mar'));
+    check('Hero and header link to the thesis', (await page.getAttribute('.hero-thesis', 'href')) === 'tesis' && (await page.getAttribute('.nav-thesis', 'href')) === 'tesis');
     check('All sections present', await page.evaluate(() => ['para-quien', 'dia', 'lugar', 'habitacion', 'empresas', 'comunidad', 'precios', 'preguntas', 'reservar'].every(id => document.getElementById(id))));
     check('Price shown', (await page.textContent('#precios')).includes('USD 40'));
     await page.click('#preguntas summary >> nth=2'); check('FAQ opens', await page.isVisible('#preguntas details:nth-child(3) p'));
