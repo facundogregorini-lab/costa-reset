@@ -1,0 +1,16 @@
+{
+  "name": "costa-reset-club",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Landing de Costa Reset Club: cowork y coliving frente al mar en Chapadmalal",
+  "scripts": {
+    "dev": "node tests/server.cjs",
+    "test": "node tests/smoke.cjs"
+  },
+  "dependencies": {
+    "redis": "4.7.1"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

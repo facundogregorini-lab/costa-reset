@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Reservas · Costa Reset Club</title>
+<link rel="icon" href="favicon.ico">
+<style>
+  :root { --bg: hsl(36 38% 93%); --fg: hsl(120 18% 10%); --muted: hsl(120 10% 36%); --line: hsl(36 18% 82%); --card: hsl(36 30% 96%); --accent: hsl(110 16% 30%); }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 system-ui, sans-serif; }
+  main { max-width: 64rem; margin: 0 auto; padding: 2rem 1rem 4rem; }
+  h1 { font-weight: 400; font-size: 1.75rem; margin: 0 0 .25rem; }
+  p { color: var(--muted); margin: 0 0 1.5rem; }
+  form { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  input { flex: 1 1 14rem; font: inherit; padding: .7rem .9rem; border: 1px solid var(--line); border-radius: 2px; background: #fff; }
+  button { font: inherit; padding: .7rem 1.2rem; border: 0; border-radius: 2px; background: var(--fg); color: var(--bg); cursor: pointer; }
+  .error { color: hsl(12 60% 42%); }
+  .table { overflow-x: auto; background: var(--card); border: 1px solid var(--line); border-radius: 2px; }
+  table { width: 100%; border-collapse: collapse; min-width: 40rem; }
+  th, td { text-align: left; padding: .7rem .9rem; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th { font-weight: 500; font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+  tr:last-child td { border-bottom: 0; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Reservas</h1>
+  <p>Las solicitudes que llegan desde el formulario de la landing, de la más nueva a la más vieja.</p>
+  <form id="login"><input id="key" type="password" placeholder="Clave de administración" autocomplete="current-password" required><button>Ver reservas</button></form>
+  <p id="status" role="status"></p>
+  <div class="table" id="tableWrap" hidden><table><thead><tr><th>Recibida</th><th>Nombre</th><th>WhatsApp</th><th>Llegada</th><th>Salida</th><th>Noches</th><th>Equipo</th></tr></thead><tbody id="rows"></tbody></table></div>
+</main>
+<script>
+const $ = id => document.getElementById(id);
+const fmt = d => new Date(d + 'T12:00:00').toLocaleDateString('es-AR', { day: 'numeric', month: 'short', year: 'numeric' });
+function cell(content) { const td = document.createElement('td'); td.append(content); return td; }
+async function load(key) {
+  $('status').className = ''; $('status').textContent = 'Cargando…';
+  const r = await fetch('/api/reserva', { headers: { Authorization: 'Bearer ' + key } }).catch(() => null);
+  const j = r ? await r.json().catch(() => ({})) : {};
+  if (!r || !r.ok) { $('status').className = 'error'; $('status').textContent = j.error || 'No pudimos cargar las reservas.'; return; }
+  try { sessionStorage.setItem('reservas-key', key); } catch {}
+  $('status').textContent = j.reservas.length ? j.reservas.length + ' reservas' : 'Todavía no hay reservas.';
+  $('rows').replaceChildren(...j.reservas.map(x => {
+    const tr = document.createElement('tr');
+    const wa = document.createElement('a');
+    wa.href = 'https://wa.me/' + x.whatsapp.replace(/\D/g, ''); wa.target = '_blank'; wa.rel = 'noopener'; wa.textContent = x.whatsapp;
+    tr.append(cell(new Date(x.createdAt).toLocaleString('es-AR', { dateStyle: 'short', timeStyle: 'short' })), cell(x.name), cell(wa), cell(fmt(x.from)), cell(fmt(x.to)), cell(String(x.nights)), cell(x.team ? 'Sí' : ''));
+    return tr;
+  }));
+  $('tableWrap').hidden = !j.reservas.length;
+}
+$('login').onsubmit = e => { e.preventDefault(); load($('key').value); };
+try { const saved = sessionStorage.getItem('reservas-key'); if (saved) load(saved); } catch {}
+</script>
+</body>
+</html>
