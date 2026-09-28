@@ -128,6 +128,18 @@ const iso = offset => new Date(Date.now() + offset * 864e5 - new Date().getTimez
     await phone.screenshot({ path: path.join(shots, 'mobile-hero.png') });
     await phone.screenshot({ path: path.join(shots, 'mobile-full.png'), fullPage: true });
 
+    // Thesis page
+    const thesis = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+    thesis.on('pageerror', e => errors.push(e.message));
+    await thesis.route('https://connect.facebook.net/**', r => r.fulfill({ contentType: 'text/javascript', body: '' }));
+    await thesis.goto(SITE + '/tesis', { waitUntil: 'load' });
+    check('Thesis page loads at /tesis', (await thesis.textContent('h1')).includes('El trabajo cambió'));
+    check('Thesis cites its sources', (await thesis.locator('.sources li').count()) >= 7);
+    check('Calculator starts with one site', (await thesis.textContent('#r-nights')) === '5.694' && (await thesis.textContent('#r-people')) === '456' && (await thesis.textContent('#r-companies')) === '29' && (await thesis.textContent('#r-share')) === '0,07%');
+    await thesis.locator('#sites').fill('10');
+    check('Calculator scales to a chain', (await thesis.textContent('#r-people')) === '4.555' && (await thesis.textContent('#r-share')) === '0,7%');
+    await thesis.close();
+
     // Reduced motion shows everything without animating
     const calm = await browser.newPage({ reducedMotion: 'reduce' });
     await calm.goto(SITE, { waitUntil: 'load' });

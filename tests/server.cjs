@@ -19,7 +19,8 @@ function createServer() {
       res.json = data => { res.setHeader('Content-Type', 'application/json'); res.end(JSON.stringify(data)); return res; };
       return require(file)(req, res);
     }
-    const rel = url.pathname === '/' ? 'index.html' : decodeURIComponent(url.pathname.slice(1));
+    let rel = url.pathname === '/' ? 'index.html' : decodeURIComponent(url.pathname.slice(1));
+    if (!path.extname(rel) && fs.existsSync(path.join(root, rel + '.html'))) rel += '.html'; // like Vercel's cleanUrls
     const file = path.join(root, rel);
     if (!file.startsWith(root) || rel.startsWith('api/') || rel.startsWith('tests/') || !fs.existsSync(file) || fs.statSync(file).isDirectory()) { res.statusCode = 404; return res.end('Not found'); }
     res.setHeader('Content-Type', types[path.extname(file)] || 'application/octet-stream');

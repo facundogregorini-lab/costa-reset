@@ -17,6 +17,10 @@ Contenido, fotos y estilo tomados de la versión de Lovable (`costa-reset-flow`)
 
 Dos públicos con su propio camino: **profesionales remotos** (pre-reserva con fechas, que abre WhatsApp) y **empresas** (pedido de propuesta: beneficio de workation, offsites o eventos). La sección **Comunidad** presenta las semanas temáticas con startups, fondos e industrias como calendario en armado de la primera temporada.
 
+## Tesis para inversores y empresas
+
+`/tesis` presenta el problema, la evidencia, el tamaño de mercado (con fuentes y supuestos marcados) y una calculadora que muestra qué fracción del mercado hace falta para llenar una sede o una cadena. `vercel.json` activa `cleanUrls`, así las páginas funcionan sin `.html`.
+
 ## Medir los anuncios
 
 - Cada pedido guarda de dónde vino: `utm_source`, `utm_campaign`, etc., `gclid` o `fbclid`. Usá UTM en todos los anuncios, por ejemplo `?utm_source=meta&utm_campaign=remotos-oct`.
