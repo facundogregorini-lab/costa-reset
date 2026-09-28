@@ -30,7 +30,7 @@ function source(data) {
 
 // Returns the entry to store, or null if the data is invalid.
 function entryFrom(data) {
-  const base = { type: data.type === 'empresa' ? 'empresa' : 'persona', name: clean(data.name, 80), source: source(data.source), createdAt: new Date().toISOString() };
+  const base = { type: data.type === 'empresa' ? 'empresa' : 'persona', name: clean(data.name, 80), source: source(data.source), eventId: clean(data.eventId, 64), createdAt: new Date().toISOString() };
   if (base.name.length < 2) return null;
   if (base.type === 'empresa') {
     const entry = { ...base, company: clean(data.company, 80), email: clean(data.email, 120), size: oneOf(data.size, SIZES), interest: oneOf(data.interest, INTERESTS) };

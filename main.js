@@ -18,11 +18,19 @@ function readSource() {
 const source = readSource();
 
 // Evento de conversión para los píxeles de Meta y Google, si están instalados.
-function trackLead(kind) {
-  try { window.fbq?.('track', 'Lead', { content_name: kind }); } catch {}
+// El eventID viaja también al servidor para que Meta no cuente dos veces la misma conversión
+// cuando llegue por el píxel y por la API de conversiones.
+const newEventId = () => (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2));
+function trackLead(kind, eventId) {
+  try { window.fbq?.('track', 'Lead', { content_name: kind }, { eventID: eventId }); } catch {}
   try { window.gtag?.('event', 'generate_lead', { form: kind }); } catch {}
   try { (window.dataLayer ||= []).push({ event: 'lead', form: kind }); } catch {}
 }
+
+// Clic en cualquier enlace de WhatsApp: evento "Contact".
+document.addEventListener('click', e => {
+  if (e.target.closest('a[href*="wa.me/"]')) { try { window.fbq?.('track', 'Contact'); } catch {} }
+});
 
 // ---------- Hero: fotos que se alternan ----------
 const slides = [...document.querySelectorAll('.hero-slides img')];
@@ -150,8 +158,9 @@ reserveForm.addEventListener('submit', e => {
 
   // WhatsApp se abre en el mismo gesto del usuario para que el navegador no lo bloquee.
   window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
-  save({ type: 'persona', name, whatsapp: phone, from: from.value, to: to.value, mode: data.mode });
-  trackLead('reserva');
+  const eventId = newEventId();
+  save({ type: 'persona', name, whatsapp: phone, from: from.value, to: to.value, mode: data.mode, eventId });
+  trackLead('reserva', eventId);
   toast('¡Listo! Abrimos WhatsApp para confirmar tu reserva.');
   reserveForm.reset();
   updateNights();
@@ -173,16 +182,17 @@ companyForm.addEventListener('submit', async e => {
   if (data.website) return;
 
   const button = companyForm.querySelector('button[type=submit]');
+  const eventId = newEventId();
   button.disabled = true;
   // Acá no hay WhatsApp de respaldo, así que esperamos la confirmación del servidor.
   const response = await fetch('/api/reserva', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ type: 'empresa', name, company, email, size: data.size, interest: data.interest, source }),
+    body: JSON.stringify({ type: 'empresa', name, company, email, size: data.size, interest: data.interest, source, eventId }),
   }).catch(() => null);
   button.disabled = false;
   if (!response?.ok) return fail(null, 'No pudimos enviar el pedido. Escribinos a hola@costaresetclub.com y te respondemos igual.');
-  trackLead('empresa');
+  trackLead('empresa', eventId);
   companyForm.reset();
   companyForm.querySelector('.form-title').textContent = '¡Gracias! Te escribimos pronto.';
   toast('Recibimos tu pedido. Te escribimos por email en menos de 48 h hábiles.');

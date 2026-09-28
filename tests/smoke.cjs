@@ -14,6 +14,9 @@ const iso = offset => new Date(Date.now() + offset * 864e5 - new Date().getTimez
   try {
     const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
     page.on('pageerror', e => errors.push(e.message));
+    // Meta's script is stubbed, so every fbq() call stays in fbq.queue where we can inspect it.
+    await page.context().route('https://connect.facebook.net/**', r => r.fulfill({ contentType: 'text/javascript', body: '' }));
+    const fbqCalls = () => page.evaluate(() => window.fbq.queue.map(args => [...args]));
     await page.goto(SITE + '/?utm_source=meta&utm_campaign=validacion-oct', { waitUntil: 'load' });
     check('Title and headline', (await page.title()).includes('Costa Reset Club') && (await page.textContent('h1')).includes('frente al mar'));
     check('All sections present', await page.evaluate(() => ['para-quien', 'dia', 'lugar', 'habitacion', 'empresas', 'comunidad', 'precios', 'preguntas', 'reservar'].every(id => document.getElementById(id))));
@@ -49,6 +52,10 @@ const iso = offset => new Date(Date.now() + offset * 864e5 - new Date().getTimez
     const text = decodeURIComponent(new URL(popup.url()).searchParams.get('text'));
     check('WhatsApp opens with the booking', popup.url().startsWith('https://wa.me/5491132524245') && text.includes('Ana Pérez') && text.includes('3 noches') && text.includes('Me lo ofrece mi empresa'));
     await popup.close();
+    const leads = (await fbqCalls()).filter(c => c[0] === 'track' && c[1] === 'Lead');
+    check('Pixel is initialised with PageView', (await fbqCalls()).some(c => c[0] === 'init' && c[1] === '1671294247882059') && (await fbqCalls()).some(c => c[1] === 'PageView'));
+    check('Booking fires a Lead with an eventID', leads.length === 1 && leads[0][2].content_name === 'reserva' && leads[0][3].eventID?.length > 8);
+    const bookingEventId = leads[0][3].eventID;
     check('Confirmation toast', (await page.textContent('#toast')).includes('WhatsApp'));
     check('Form resets', (await page.inputValue('#name')) === '' && (await page.textContent('#nights')) === '');
     await page.waitForTimeout(300);
@@ -63,6 +70,11 @@ const iso = offset => new Date(Date.now() + offset * 864e5 - new Date().getTimez
     await page.fill('#c-email', 'laura@acme.com'); await page.click('#companyForm button[type=submit]');
     await page.waitForFunction(() => document.querySelector('#companyForm .form-title').textContent.includes('Gracias'));
     check('Company request is sent', (await page.textContent('#toast')).includes('Recibimos'));
+    const companyLead = (await fbqCalls()).filter(c => c[1] === 'Lead').pop();
+    check('Company request fires its own Lead', companyLead[2].content_name === 'empresa' && companyLead[3].eventID !== bookingEventId);
+    const [waPopup] = await Promise.all([page.waitForEvent('popup'), page.click('.btn-wa')]);
+    await waPopup.close();
+    check('WhatsApp clicks fire Contact', (await fbqCalls()).some(c => c[1] === 'Contact'));
 
     // Admin page
     const admin = await browser.newPage();
@@ -77,6 +89,8 @@ const iso = offset => new Date(Date.now() + offset * 864e5 - new Date().getTimez
     check('Admin lists the company request', rows[0].includes('Acme SA') && rows[0].includes('Offsite') && rows[0].includes('meta · validacion-oct'));
     check('Admin lists the booking with its source', rows[1].includes('Ana Pérez') && rows[1].includes('3 n.') && rows[1].includes('Me lo ofrece mi empresa') && rows[1].includes('meta · validacion-oct'));
     const summary = await admin.textContent('#summary');
+    const stored = (await (await fetch(SITE + '/api/reserva', { headers: { Authorization: 'Bearer clave-local-123' } })).json()).reservas;
+    check('Server keeps the eventID for deduplication', stored.some(x => x.eventId === bookingEventId) && stored.some(x => x.type === 'empresa' && x.eventId));
     check('Admin summary counts leads by campaign', summary.includes('1pre-reservas') && summary.includes('3noches') && summary.includes('1empresas') && summary.includes('2meta · validacion-oct'));
     await admin.screenshot({ path: path.join(shots, 'admin.png') });
 

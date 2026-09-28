@@ -19,7 +19,24 @@
 <link rel="preload" as="image" href="img/hero-beach-lg.webp" imagesrcset="img/hero-beach-sm.webp 800w, img/hero-beach-lg.webp 1536w" imagesizes="100vw" fetchpriority="high">
 <link rel="stylesheet" href="styles.css">
 <script>document.documentElement.classList.add('js')</script>
-<!-- Píxeles de anuncios (Meta / Google): pegalos acá. main.js ya envía el evento "Lead" en cada formulario. -->
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1671294247882059');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1671294247882059&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+<!-- main.js envía "Lead" en cada formulario (con eventID para deduplicar con la API de conversiones) y "Contact" en los enlaces de WhatsApp. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -470,7 +487,7 @@
     </div>
   </div>
   <div class="wrap footer-base">
-    <p>© <span id="year">2026</span> Costa Reset Club. Imágenes ilustrativas.</p>
+    <p>© <span id="year">2026</span> Costa Reset Club. Imágenes ilustrativas. <a href="privacidad.html">Privacidad</a></p>
     <p>Hecho con sal y café en Buenos Aires.</p>
   </div>
 </footer>
