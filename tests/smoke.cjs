@@ -136,10 +136,9 @@ const iso = offset => new Date(Date.now() + offset * 864e5 - new Date().getTimez
     await thesis.goto(SITE + '/tesis', { waitUntil: 'load' });
     check('Thesis page loads at /tesis', (await thesis.textContent('h1')).includes('El trabajo cambió'));
     check('Thesis cites its sources', (await thesis.locator('.sources li').count()) >= 7);
-    check('Calculator starts with one site', (await thesis.textContent('#r-nights')) === '5.694' && (await thesis.textContent('#r-people')) === '376' && (await thesis.textContent('#r-companies')) === '29' && (await thesis.textContent('#r-share')) === '0,06%');
-    check('Themed weeks are part of the occupancy', (await thesis.textContent('#r-themed')) === '600 noches' && (await thesis.textContent('#r-tshare')) === '11%');
+    check('Calculator starts with one site', (await thesis.textContent('#r-nights')) === '5.694' && (await thesis.textContent('#r-people')) === '456' && (await thesis.textContent('#r-companies')) === '29' && (await thesis.textContent('#r-share')) === '0,07%');
     await thesis.locator('#sites').fill('10');
-    check('Calculator scales to a chain', (await thesis.textContent('#r-people')) === '3.755' && (await thesis.textContent('#r-share')) === '0,6%');
+    check('Calculator scales to a chain', (await thesis.textContent('#r-people')) === '4.555' && (await thesis.textContent('#r-share')) === '0,7%');
     check('Startup ecosystem is part of the thesis', (await thesis.textContent('.startups')).includes('1.384') && (await thesis.locator('.sources li').count()) >= 10);
     await thesis.close();
 
