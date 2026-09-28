@@ -216,6 +216,13 @@ src="https://www.facebook.com/tr?id=1671294247882059&ev=PageView&noscript=1"
           <label>Noches vendidas a empresas <output id="o-corp"></output><input type="range" id="corp" min="0" max="80" step="5" value="40"></label>
           <label>Ticket medio por noche <output id="o-ticket"></output><input type="range" id="ticket" min="40" max="250" step="5" value="80" aria-describedby="ticket-hint"><small class="calc-hint" id="ticket-hint">Hospedaje, cowork, actividades y otros consumos, por persona y por noche.</small></label>
           <label>Sedes <output id="o-sites"></output><input type="range" id="sites" min="1" max="15" step="1" value="1"></label>
+          <fieldset class="calc-group">
+            <legend>Ingresos del cowork</legend>
+            <small class="calc-hint">Day pass para personas que no se hospedan, por sede.</small>
+            <label>Puestos de cowork <output id="o-seats"></output><input type="range" id="seats" min="0" max="300" step="10" value="100"></label>
+            <label>Ocupación del cowork <output id="o-cowork-occ"></output><input type="range" id="coworkOcc" min="0" max="100" step="5" value="50"></label>
+            <label>Day pass <output id="o-daypass"></output><input type="range" id="daypass" min="10" max="60" step="1" value="25"></label>
+          </fieldset>
         </form>
         <div class="calc-results" aria-live="polite">
           <div class="result result-pair">
@@ -227,6 +234,7 @@ src="https://www.facebook.com/tr?id=1671294247882059&ev=PageView&noscript=1"
               <p class="result-label">Facturación anual</p>
               <p class="result-value revenue"><small>USD</small> <span id="r-revenue"></span></p>
               <p class="result-share" id="r-revenue-note"></p>
+              <p class="revenue-split"><span>Estadías <b id="r-rev-stays"></b></span><span>Cowork <b id="r-rev-cowork"></b></span></p>
             </div>
           </div>
           <div class="result">
@@ -241,7 +249,7 @@ src="https://www.facebook.com/tr?id=1671294247882059&ev=PageView&noscript=1"
             <p class="result-share"><b id="r-cshare"></b> de las grandes empresas híbridas (≈ 2.450)</p>
             <div class="share-bar" aria-hidden="true"><span id="r-cshare-bar"></span></div>
           </div>
-          <p class="calc-note">Facturación = noches ocupadas × ticket medio, en dólares y antes de impuestos. Cada empresa cliente: 20 personas × 4 noches al año. Una habitación por persona. Cálculos propios con los supuestos de la izquierda.</p>
+          <p class="calc-note">Facturación = noches ocupadas × ticket medio + puestos × ocupación × day pass × 250 días hábiles, en dólares y antes de impuestos. Cada empresa cliente: 20 personas × 4 noches al año. Una habitación por persona. Cálculos propios con los supuestos de la izquierda.</p>
         </div>
       </div>
     </div>
