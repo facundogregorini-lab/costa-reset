@@ -46,28 +46,19 @@ document.querySelectorAll('.bars li').forEach(li => {
 });
 
 // Calculadora
-const PEOPLE_MARKET = 650000, COMPANY_MARKET = 2450, NIGHTS_PER_COMPANY = 20 * 4, COWORK_DAYS = 250;
+const PEOPLE_MARKET = 650000, COMPANY_MARKET = 2450, NIGHTS_PER_COMPANY = 20 * 4;
 const fmt = n => Math.round(n).toLocaleString('es-AR');
 const pct = n => (n < 0.1 ? n.toLocaleString('es-AR', { maximumFractionDigits: 2 }) : n < 10 ? n.toLocaleString('es-AR', { maximumFractionDigits: 1 }) : Math.round(n).toLocaleString('es-AR')) + '%';
 const val = id => Number($(id).value);
 function calc() {
-  const rooms = val('rooms'), occ = val('occ') / 100, stay = val('stay'), visits = val('visits'), corp = val('corp') / 100, sites = val('sites'), ticket = val('ticket');
-  const seats = val('seats'), coworkOcc = val('coworkOcc') / 100, daypass = val('daypass');
+  const rooms = val('rooms'), occ = val('occ') / 100, stay = val('stay'), visits = val('visits'), corp = val('corp') / 100, sites = val('sites');
   $('o-rooms').textContent = rooms; $('o-occ').textContent = Math.round(occ * 100) + '%'; $('o-stay').textContent = stay;
-  $('o-visits').textContent = visits.toLocaleString('es-AR'); $('o-corp').textContent = Math.round(corp * 100) + '%'; $('o-sites').textContent = sites; $('o-ticket').textContent = 'USD ' + ticket;
-  $('o-seats').textContent = seats; $('o-cowork-occ').textContent = Math.round(coworkOcc * 100) + '%'; $('o-daypass').textContent = 'USD ' + daypass;
+  $('o-visits').textContent = visits.toLocaleString('es-AR'); $('o-corp').textContent = Math.round(corp * 100) + '%'; $('o-sites').textContent = sites;
   const nights = rooms * 365 * occ * sites;
   const people = nights * (1 - corp) / stay / visits;
   const companies = nights * corp / NIGHTS_PER_COMPANY;
   const share = people / PEOPLE_MARKET * 100, cshare = companies / COMPANY_MARKET * 100;
   $('r-nights').textContent = fmt(nights);
-  const stays = nights * ticket;
-  const cowork = seats * coworkOcc * COWORK_DAYS * daypass * sites;
-  const revenue = stays + cowork;
-  $('r-rev-stays').textContent = 'USD ' + fmt(stays);
-  $('r-rev-cowork').textContent = 'USD ' + fmt(cowork);
-  $('r-revenue').textContent = fmt(revenue);
-  $('r-revenue-note').textContent = sites > 1 ? `USD ${fmt(revenue / sites)} por sede` : `USD ${fmt(revenue / 12)} por mes`;
   $('r-people').textContent = fmt(people);
   $('r-share').textContent = pct(share);
   $('r-share-bar').style.width = Math.min(100, share) + '%';

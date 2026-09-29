@@ -150,16 +150,3 @@
 .roles li::before { content: counter(role, decimal-leading-zero); display: block; font-family: var(--display); color: var(--ring); margin-bottom: .5rem; }
 .roles b { display: block; color: var(--fg); font-weight: 600; margin-bottom: .25rem; }
 
-/* Ticket y facturación */
-.calc-hint { grid-column: 1 / -1; margin-top: -.3rem; font-size: .75rem; color: var(--muted); }
-.result-pair { display: grid; gap: 1.25rem; }
-@media (min-width: 560px) { .result-pair { grid-template-columns: 1fr 1fr; gap: 2rem; } }
-.revenue { color: var(--ring); white-space: nowrap; font-size: clamp(2rem, 1.5rem + 1.4vw, 2.9rem); }
-.revenue small { font-size: .45em; letter-spacing: .05em; margin-right: .15em; }
-
-/* Cowork */
-.calc-group { border: 0; border-top: 1px solid var(--line); margin: .5rem 0 0; padding: 1.25rem 0 0; display: grid; gap: 1.4rem; min-width: 0; }
-.calc-group legend { padding: 0 0 .25rem; font-family: var(--display); font-size: 1.1rem; color: var(--fg); float: left; width: 100%; }
-.calc-group .calc-hint { margin-top: -1rem; }
-.revenue-split { margin-top: .6rem; display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; font-size: .85rem; color: var(--muted); }
-.revenue-split b { color: var(--fg); font-weight: 500; }
